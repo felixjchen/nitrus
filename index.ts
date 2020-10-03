@@ -5,49 +5,56 @@ const app = Express();
 const port = 3000;
 
 let { client_id, client_secret } = require("./secrets.json");
+let redirect_uri = "http://localhost:3000/";
 
-var redirect_uri = "http://localhost:3000/";
-
-app.get("/login", function (req, res) {
-  var scopes = "user-read-private user-read-email";
-  res.redirect(
-    "https://accounts.spotify.com/authorize" +
-      "?response_type=code" +
-      "&client_id=" +
-      client_id +
-      (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
-      "&redirect_uri=" +
-      encodeURIComponent(redirect_uri)
-  );
-});
-
-app.get("/", (req, res) => {
-  var raw = {
+const getAccessAndRefresh = async (code) => {
+  let raw = {
     grant_type: "authorization_code",
-    code: req.query.code,
-    redirect_uri: "http://localhost:3000/",
+    redirect_uri,
+    code,
     client_id,
     client_secret,
   };
-
-  var urlencoded = new URLSearchParams();
+  let urlencoded = new URLSearchParams();
   for (let k in raw) {
     urlencoded.append(k, raw[k]);
   }
-
-  var requestOptions = {
+  let requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: urlencoded,
     redirect: "follow",
   };
 
-  Fetch("https://accounts.spotify.com/api/token", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+  let response = await Fetch(
+    "https://accounts.spotify.com/api/token",
+    requestOptions
+  );
+  return JSON.parse(await response.text());
+};
 
-  res.send("hi");
+app.get("/", async (req, res) => {
+  if (req.query.code == null) {
+    // Authenticate
+    let scopes = "user-modify-playback-state";
+    res.redirect(
+      "https://accounts.spotify.com/authorize" +
+        "?response_type=code" +
+        "&client_id=" +
+        client_id +
+        (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
+        "&redirect_uri=" +
+        encodeURIComponent(redirect_uri)
+    );
+  } else {
+    // Has authenticated
+
+    let { access_token, refresh_token, error } = await getAccessAndRefresh(
+      req.query.code
+    );
+
+    res.send("hi");
+  }
 });
 
 app.listen(port, () => {
