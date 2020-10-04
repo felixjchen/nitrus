@@ -3,7 +3,7 @@ import * as express from "./node_modules/express";
 import * as socketio from "./node_modules/socket.io";
 import * as querystring from "querystring";
 
-import { getAccessAndRefresh } from "./lib/spotify-authorization";
+import { getAccessAndRefresh, getAccess } from "./lib/spotify-authorization";
 import { getProfile } from "./lib/spotify-helpers";
 
 import * as secrets from "./secrets.json";
@@ -31,20 +31,27 @@ app.get("/", async (req, res) => {
     );
   } else {
     // Has authenticated
-    let { access_token, refresh_token, error } = await getAccessAndRefresh(
-      req.query.code
-    );
+    let {
+      access_token,
+      refresh_token,
+      error,
+      expires_in,
+    } = await getAccessAndRefresh(req.query.code);
 
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
     } else {
-      console.log(access_token, refresh_token);
-      let { display_name } = await getProfile(access_token);
+      let profile = await getProfile(access_token);
+      console.log(await getProfile(access_token));
+      console.log(
+        `${profile.display_name} signed in with access_token ${access_token} expiring in ${expires_in} seconds`
+      );
 
-      console.log(querystring.stringify(req.query));
+      // console.log(querystring.stringify(req.query));
+      console.log(await getAccess(refresh_token));
 
       // res.redirect(frontend_url);
-      res.send(`Hello ${display_name}`);
+      res.send(`Hello ${profile.display_name}`);
     }
   }
 });
