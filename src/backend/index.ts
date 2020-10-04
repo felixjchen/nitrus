@@ -2,9 +2,11 @@ import * as http from "http";
 import * as express from "./node_modules/express";
 import * as socketio from "./node_modules/socket.io";
 import * as querystring from "querystring";
-import * as secrets from "./secrets.json";
 
 import { getAccessAndRefresh } from "./lib/spotify-authorization";
+import { getProfile } from "./lib/spotify-helpers";
+
+import * as secrets from "./secrets.json";
 const { client_id, client_secret, redirect_uri } = secrets;
 
 const app = express();
@@ -13,18 +15,6 @@ const socket = socketio(httpServer);
 const port = 80;
 
 const frontend_url = "http://localhost:3000";
-
-const getProfile = async (access_token) => {
-  let requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-    },
-    redirect: "follow",
-  };
-  let response = await fetch("https://api.spotify.com/v1/me", requestOptions);
-  return JSON.parse(await response.text());
-};
 
 app.get("/", async (req, res) => {
   if (req.query.code == null) {
