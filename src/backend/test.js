@@ -1,11 +1,12 @@
 const Express = require("express");
 const Fetch = require("node-fetch");
+const io = require("socket.io")(3000);
 
 const app = Express();
-const port = 3000;
+const port = 80;
 
 let { client_id, client_secret } = require("./secrets.json");
-let redirect_uri = "http://localhost:3000/";
+let redirect_uri = "http://localhost";
 
 const getAccessAndRefresh = async (code) => {
   let raw = {
@@ -33,10 +34,22 @@ const getAccessAndRefresh = async (code) => {
   return JSON.parse(await response.text());
 };
 
+const getProfile = async (access_token) => {
+  let requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    redirect: "follow",
+  };
+  let response = await Fetch("https://api.spotify.com/v1/me", requestOptions);
+  return JSON.parse(await response.text());
+};
+
 app.get("/", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
-    let scopes = "user-modify-playback-state";
+    let scopes = "user-read-email user-modify-playback-state";
     res.redirect(
       "https://accounts.spotify.com/authorize" +
         "?response_type=code" +
@@ -48,12 +61,18 @@ app.get("/", async (req, res) => {
     );
   } else {
     // Has authenticated
-
     let { access_token, refresh_token, error } = await getAccessAndRefresh(
       req.query.code
     );
 
-    res.send("hi");
+    if (error == "invalid_grant") {
+      res.redirect(redirect_uri);
+    } else {
+      // console.log(access_token, refresh_token);
+      let { display_name } = await getProfile(access_token);
+
+      res.send(`Hello ${display_name}`);
+    }
   }
 });
 
