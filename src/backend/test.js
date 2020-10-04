@@ -1,6 +1,5 @@
 const Express = require("express");
 const Fetch = require("node-fetch");
-const io = require("socket.io")(3000);
 
 const app = Express();
 const port = 80;

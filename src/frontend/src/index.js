@@ -4,9 +4,9 @@ import { render } from "react-dom";
 import io from "socket.io-client";
 
 import Page from "./components/page";
-const ENDPOINT = "http://0.0.0.0";
+const socketEndpoint = "http://0.0.0.0";
+const socket = io(socketEndpoint);
 
-const socket = io(ENDPOINT);
 socket.on("connect", () => {
   console.log(1);
 });
