@@ -1,44 +1,18 @@
-import * as fetch from "./node_modules/node-fetch";
+import * as http from "http";
 import * as express from "./node_modules/express";
 import * as socketio from "./node_modules/socket.io";
-import * as http from "http";
+import * as querystring from "querystring";
 import * as secrets from "./secrets.json";
 
-let { client_id, client_secret } = secrets;
+import { getAccessAndRefresh } from "./lib/spotify-authorization";
+const { client_id, client_secret, redirect_uri } = secrets;
 
 const app = express();
 const httpServer = http.createServer(app);
 const socket = socketio(httpServer);
-
 const port = 80;
 
-let redirect_uri = "http://localhost:3000/";
-
-const getAccessAndRefresh = async (code) => {
-  let raw = {
-    grant_type: "authorization_code",
-    redirect_uri,
-    code,
-    client_id,
-    client_secret,
-  };
-  let urlencoded = new URLSearchParams();
-  for (let k in raw) {
-    urlencoded.append(k, raw[k]);
-  }
-  let requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: urlencoded,
-    redirect: "follow",
-  };
-
-  let response = await fetch(
-    "https://accounts.spotify.com/api/token",
-    requestOptions
-  );
-  return JSON.parse(await response.text());
-};
+const frontend_url = "http://localhost:3000";
 
 const getProfile = async (access_token) => {
   let requestOptions = {
@@ -74,9 +48,12 @@ app.get("/", async (req, res) => {
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
     } else {
-      // console.log(access_token, refresh_token);
+      console.log(access_token, refresh_token);
       let { display_name } = await getProfile(access_token);
 
+      console.log(querystring.stringify(req.query));
+
+      // res.redirect(frontend_url);
       res.send(`Hello ${display_name}`);
     }
   }
