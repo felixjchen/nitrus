@@ -64,7 +64,7 @@ app.get("/", async (req, res) => {
         () => refresh(profile.id, refresh_token),
         (expires_in - 2) * 1000
       );
-      console.log(room);
+      console.log(`User ${profile.display_name} has connected`);
 
       res.redirect(
         `${frontend_url}?${querystring.stringify({ id: profile.id })}`
@@ -76,7 +76,7 @@ app.get("/", async (req, res) => {
 });
 
 socket.on("connection", (socket) => {
-  console.log("A user connected");
+  console.log("A user connected to socket");
 });
 
 httpServer.listen(port, () => {
