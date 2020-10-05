@@ -12,10 +12,13 @@ for (let entry of urlSearchParams) {
 console.log(urlParams);
 
 // https://www.npmjs.com/package/socket.io-client
-const socketServerAddress = "http://0.0.0.0";
-const socket = io(socketServerAddress);
+const backendAddress = "http://0.0.0.0";
+const socket = io(backendAddress);
 socket.on("connect", () => {
   console.log("Socket connected to server.");
 });
 
-render(<Page />, document.getElementById("root"));
+render(
+  <Page profileUrl={urlParams.profileUrl} />,
+  document.getElementById("root")
+);

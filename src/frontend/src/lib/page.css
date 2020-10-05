@@ -2,20 +2,10 @@ body {
   height: 100vh;
 }
 
-/* Nav styles */
-#page .bx--side-nav__items {
-  padding: 0;
-}
-#page .bx--side-nav--rail:not(.bx--side-nav--expanded) {
-  width: 0rem;
-}
+img {
+  object-fit: scale-down;
+  width: 37px;
 
-#page .bx--header__menu-toggle {
-  display: none;
-}
-
-@media only screen and (max-width: 1056px) {
-  #page .bx--header__menu-toggle {
-    display: inline;
-  }
+  margin-right: 3px;
+  margin-bottom: 4px;
 }

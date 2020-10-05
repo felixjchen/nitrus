@@ -47,7 +47,8 @@ app.get("/", async (req, res) => {
       // console.log(await getAccess(refresh_token));
 
       let profile = await getProfile(access_token);
-      profile.profileImageUrl = profile.images[0].url;
+      profile.profileUrl = profile.images[0].url;
+      profile.access_token = access_token;
 
       room.users[profile.id] = profile;
       res.redirect(`${frontend_url}?${querystring.stringify(profile)}`);
