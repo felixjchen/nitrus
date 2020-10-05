@@ -41,17 +41,17 @@ app.get("/", async (req, res) => {
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
     } else {
+      // Need to refresh access token!!!!
+      // console.log(await getAccess(refresh_token));
+
       let profile = await getProfile(access_token);
-      console.log(await getProfile(access_token));
-      console.log(
-        `${profile.display_name} signed in with access_token ${access_token} expiring in ${expires_in} seconds`
-      );
+      profile.profileImageUrl = profile.images[0].url;
 
-      // console.log(querystring.stringify(req.query));
-      console.log(await getAccess(refresh_token));
+      console.log(profile);
+      console.log(querystring.stringify(profile));
 
-      // res.redirect(frontend_url);
-      res.send(`Hello ${profile.display_name}`);
+      res.redirect(`${frontend_url}?${querystring.stringify(profile)}`);
+      // res.send(`Hello ${profile.display_name}`);
     }
   }
 });

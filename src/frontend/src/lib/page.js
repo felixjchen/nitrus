@@ -30,17 +30,20 @@ class Page extends React.Component {
         <HeaderContainer
           render={({ isSideNavExpanded, onClickSideNavExpand }) => (
             <>
-              <Header aria-label="IBM Platform Name">
+              <Header aria-label="patlamaya">
                 <HeaderMenuButton
                   aria-label="Open menu"
                   isCollapsible
                   onClick={onClickSideNavExpand}
                   isActive={isSideNavExpanded}
                 />
-                <HeaderName href="#" prefix="FC">
-                  Project
+                <HeaderName
+                  href="https://github.com/felixjchen/spotify-together"
+                  prefix="patlamaya"
+                >
+                  devam
                 </HeaderName>
-                <HeaderNavigation aria-label="FC Project">
+                <HeaderNavigation aria-label="patlamaya">
                   <HeaderMenuItem href="#">Link 1</HeaderMenuItem>
                   <HeaderMenuItem href="#">Link 2</HeaderMenuItem>
 
