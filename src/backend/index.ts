@@ -16,7 +16,20 @@ const port = 80;
 
 const frontend_url = "http://localhost:3000";
 
+// Need to cleanup refresh listener on exit
 let room = { queue: [], users: {} };
+
+let refresh = async (id, refresh_token) => {
+  let { access_token, expires_in } = await getAccess(refresh_token);
+
+  room.users[id].access_token = access_token;
+  room.users[id].refreshTimeout = setTimeout(
+    () => refresh(id, refresh_token),
+    (expires_in - 2) * 1000
+  );
+
+  console.log(`Refreshed acces_token for user ${room.users[id].display_name}`);
+};
 
 app.get("/", async (req, res) => {
   if (req.query.code == null) {
@@ -43,17 +56,20 @@ app.get("/", async (req, res) => {
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
     } else {
-      // Need to refresh access token!!!!
-      // console.log(await getAccess(refresh_token));
-
       let profile = await getProfile(access_token);
       profile.profileUrl = profile.images[0].url;
       profile.access_token = access_token;
-
       room.users[profile.id] = profile;
-      res.redirect(`${frontend_url}?${querystring.stringify(profile)}`);
-
+      room.users[profile.id].refreshTimeout = setTimeout(
+        () => refresh(profile.id, refresh_token),
+        (expires_in - 2) * 1000
+      );
       console.log(room);
+
+      res.redirect(
+        `${frontend_url}?${querystring.stringify({ id: profile.id })}`
+      );
+
       // res.send(`Hello ${profile.display_name}`);
     }
   }
