@@ -16,6 +16,8 @@ const port = 80;
 
 const frontend_url = "http://localhost:3000";
 
+let room = { queue: [], users: {} };
+
 app.get("/", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
@@ -47,17 +49,17 @@ app.get("/", async (req, res) => {
       let profile = await getProfile(access_token);
       profile.profileImageUrl = profile.images[0].url;
 
-      console.log(profile);
-      console.log(querystring.stringify(profile));
-
+      room.users[profile.id] = profile;
       res.redirect(`${frontend_url}?${querystring.stringify(profile)}`);
+
+      console.log(room);
       // res.send(`Hello ${profile.display_name}`);
     }
   }
 });
 
 socket.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("A user connected");
 });
 
 httpServer.listen(port, () => {
