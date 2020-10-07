@@ -11,7 +11,7 @@ const { client_id, client_secret, redirect_uri } = secrets;
 
 const app = express();
 const httpServer = http.createServer(app);
-const socket = socketio(httpServer);
+const io = socketio(httpServer);
 const port = 80;
 
 const frontend_url = "http://localhost:3000";
@@ -30,6 +30,10 @@ let refresh = async (id, refresh_token) => {
 
   console.log(`Refreshed acces_token for user ${room.users[id].display_name}`);
 };
+
+app.get("/logout", (req, res) => {
+  res.send("logout");
+});
 
 app.get("/", async (req, res) => {
   if (req.query.code == null) {
@@ -64,19 +68,33 @@ app.get("/", async (req, res) => {
         () => refresh(profile.id, refresh_token),
         (expires_in - 2) * 1000
       );
-      console.log(`User ${profile.display_name} has connected`);
+      console.log(`User ${profile.display_name} has authenticated`);
 
       res.redirect(
         `${frontend_url}?${querystring.stringify({ id: profile.id })}`
       );
-
-      // res.send(`Hello ${profile.display_name}`);
     }
   }
 });
 
-socket.on("connection", (socket) => {
-  console.log("A user connected to socket");
+io.on("connect", (socket) => {
+  socket.on("syncReq", (id) => {
+    let roomRes = { ...room };
+    for (let userId in roomRes.users) {
+      let user = roomRes.users[userId];
+      for (let k in user) {
+        if (
+          !(
+            ["display_name", "email", "href", "id", "profileUrl"].includes(k) ||
+            (userId == id && k == "access_token")
+          )
+        ) {
+          delete user[k];
+        }
+      }
+    }
+    socket.emit("syncRes", roomRes);
+  });
 });
 
 httpServer.listen(port, () => {
