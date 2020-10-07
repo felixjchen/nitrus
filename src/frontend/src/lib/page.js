@@ -25,6 +25,14 @@ import { Fade16 } from "@carbon/icons-react";
 import { Logout20 } from "@carbon/icons-react";
 import styles from "./page.css";
 
+const bottomSheetProps = {
+  overflowHeight: 64,
+  shadowTip: false,
+  topShadow: false,
+  overlay: false,
+  scrollTopAtClose: true,
+};
+
 class Page extends React.Component {
   // constructor(props) {
   //   super(props);
@@ -59,22 +67,21 @@ class Page extends React.Component {
               </Header>
               <Grid>
                 <Row>
-                  <Column id="q" sm={{ span: 0 }} md={2} lg={3}>
+                  <Column id="queue" sm={{ span: 0 }} md={2} lg={3}>
                     Queue
                   </Column>
                   <Column sm={4} md={6} lg={9}>
-                    <Search id="search-1" />
+                    <Search
+                      id="search"
+                      placeHolderText={"Find a song"}
+                      size={"lg"}
+                    />
                   </Column>
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
-                    <SwipeableBottomSheet
-                      overflowHeight={64}
-                      shadowTip={false}
-                      topShadow={false}
-                      overlay={false}
-                    >
+                    <SwipeableBottomSheet {...bottomSheetProps}>
                       <div
-                        id="q"
+                        id="queue"
                         style={{
                           "background-color": "#f4f4f4;",
                           height: "calc(100vh - 3rem)",

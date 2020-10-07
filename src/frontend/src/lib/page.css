@@ -20,7 +20,13 @@ body {
 .bx--search-magnifier {
   z-index: 0;
 }
-#q {
+
+#queue {
   height: calc(100vh - 3rem);
   background-color: #f4f4f4;
+}
+
+.bx--search {
+  margin: auto;
+  width: 80%;
 }
