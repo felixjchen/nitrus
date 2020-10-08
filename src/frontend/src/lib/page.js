@@ -63,7 +63,8 @@ class Page extends React.Component {
                     Queue
                   </Column>
                   <Column sm={4} md={6} lg={9}>
-                    {/* How do we pass input to sibling element in React??? */}
+                    {/* How do we pass input to sibling element in React??? 
+                    https://stackoverflow.com/questions/41028498/react-passing-state-between-siblings*/}
                     <Search
                       id="search"
                       placeHolderText={"Find a song"}
