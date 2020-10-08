@@ -1,6 +1,6 @@
 # spotify together
 
-- frontend : nitrous.netlify.app
+- [frontend](https://nitrous.netlify.app/)
 - plan to host this on Azure App service
 
 ## onboarding
