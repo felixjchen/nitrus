@@ -4,9 +4,10 @@
 - plan to host this on Azure App service
 
 ## onboarding
+- postman
+- spotify api, client secret and client id
 - nodejs / npm
 - react
-- spotify app, client secret and client id
 
 
 
