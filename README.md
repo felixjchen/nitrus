@@ -1,4 +1,4 @@
-# spotify together
+# spotify vote
 
 - [frontend](https://nitrous.netlify.app/)
 - plan to host this on Azure App service
