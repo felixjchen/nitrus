@@ -90,8 +90,8 @@ class SearchResult extends React.Component {
           getTableContainerProps,
         }) => (
           <TableContainer
-            title={this.props.search}
-            description="Usage example"
+            title={"d"}
+            description={this.props.searchQuery}
             {...getTableContainerProps()}
           >
             <Table {...getTableProps()} isSortable>

@@ -28,12 +28,23 @@ const bottomSheetProps = {
 class Page extends React.Component {
   constructor(props) {
     super(props);
+
+    // this.state = {
+    //   searchQuery: "",
+    // };
   }
+
+  onChangeSearch = () => {
+    // this.setState({
+    //   searchQuery: document.getElementById("search").value,
+    // });
+    console.log(document.getElementById("search").value);
+  };
   render() {
     return (
       <div id="page">
         <HeaderContainer
-          render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+          render={() => (
             <>
               <Header aria-label="Nitrous">
                 <HeaderName
@@ -70,11 +81,9 @@ class Page extends React.Component {
                       placeHolderText={"Find a song"}
                       size={"lg"}
                       labelText="search"
-                      onChange={() => {
-                        console.log(document.getElementById("search").value);
-                      }}
+                      onChange={this.onChangeSearch}
                     />
-                    <SearchResult search={"d"}></SearchResult>
+                    <SearchResult searchQuery={""}></SearchResult>
                   </Column>
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>

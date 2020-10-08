@@ -2,17 +2,9 @@ body {
   height: 100vh;
 }
 
-/* img {
-  object-fit: scale-down;
-  width: 37px;
-
-  margin-right: 3px;
-  margin-bottom: 4px;
-} */
-
 .bx--grid {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0;
+  margin: 0;
 }
 .bx--header {
   position: static;
