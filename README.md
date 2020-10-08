@@ -10,7 +10,11 @@
 - nodejs / npm, https://nodejs.org/en/download/
 - react, `npm install`
 
-
+## Git practices
+- assign yourself issues
+- branch, complete issue
+- pull request, at least one reviewer
+- merge, close issue
 
 ## wireframe
 - https://wireframe.cc/LqTfuO desktop
