@@ -16,6 +16,7 @@ socket.on("connect", () => {
 
 socket.on("syncRes", (room) => {
   console.log(room);
+  render(<Page room={room} />, document.getElementById("root"));
 });
 
 render(<Page />, document.getElementById("root"));
