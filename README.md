@@ -4,12 +4,17 @@
 - plan to host this on Azure App service
 
 ## onboarding
-- postman
-- spotify api, client secret and client id
-- nodejs / npm
-- react
+- postman https://www.postman.com/downloads/
+- spotify api https://developer.spotify.com/documentation/web-api/
+- spotify api authentication, client secret and client id, https://developer.spotify.com/documentation/general/guides/authorization-guide/
+- nodejs / npm, https://nodejs.org/en/download/
+- react, `npm install`
 
-
+## Git practices
+- assign yourself issues
+- branch, complete issue
+- pull request, at least one reviewer
+- merge, close issue
 
 ## wireframe
 - https://wireframe.cc/LqTfuO desktop
