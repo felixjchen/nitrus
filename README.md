@@ -22,5 +22,8 @@
 
 
 ## useful links
+- https://reactjs.org/, React
+- https://developer.spotify.com/documentation/web-api/, Spotify
+- https://socket.io/docs , Socketio
 - https://react.carbondesignsystem.com/?path=/story/* , React Carbon Design  
 - https://github.com/manufont/react-swipeable-bottom-sheet, using this in mobile view to hide queue, but we can keep queue large vertically, which will be nice
