@@ -14,7 +14,7 @@ import {
 } from "carbon-components-react";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
-import { SearchResult } from "./search-result";
+import { SearchResult } from "./search";
 import styles from "./page.css";
 
 const bottomSheetProps = {
@@ -28,18 +28,8 @@ const bottomSheetProps = {
 class Page extends React.Component {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   searchQuery: "",
-    // };
   }
 
-  onChangeSearch = () => {
-    // this.setState({
-    //   searchQuery: document.getElementById("search").value,
-    // });
-    console.log(document.getElementById("search").value);
-  };
   render() {
     return (
       <div id="page">
@@ -76,6 +66,8 @@ class Page extends React.Component {
                   <Column sm={4} md={6} lg={9}>
                     {/* How do we pass input to sibling element in React??? 
                     https://stackoverflow.com/questions/41028498/react-passing-state-between-siblings*/}
+                    {/* https://stackoverflow.com/questions/43146825/react-elegant-way-to-re-render-just-one-child-component */}
+                    {/* We need to have these in their own componens while implementing shouldComponentUpdate for Search */}
                     <Search
                       id="search"
                       placeHolderText={"Find a song"}

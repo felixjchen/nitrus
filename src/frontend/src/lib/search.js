@@ -9,8 +9,9 @@ import {
   TableHeader,
   TableBody,
   TableCell,
+  Search,
 } from "carbon-components-react";
-import styles from "./search-result.css";
+import styles from "./search.css";
 const searchResultProps = {
   rows: [
     {
@@ -19,9 +20,6 @@ const searchResultProps = {
       protocol: "HTTP",
       port: 3000,
       rule: "Round robin",
-      attached_groups: "Kevin’s VM Groups",
-      status: "Disabled",
-      enabled: true,
     },
     {
       id: "b",
@@ -29,9 +27,6 @@ const searchResultProps = {
       protocol: "HTTP",
       port: 443,
       rule: "Round robin",
-      attached_groups: "Maureen’s VM Groups",
-      status: "Starting",
-      enabled: true,
     },
     {
       id: "c",
@@ -39,9 +34,6 @@ const searchResultProps = {
       protocol: "HTTP",
       port: 80,
       rule: "DNS delegation",
-      attached_groups: "Andrew’s VM Groups",
-      status: "Active",
-      enabled: false,
     },
   ],
   headers: [
@@ -61,24 +53,14 @@ const searchResultProps = {
       key: "rule",
       header: "Rule",
     },
-    {
-      key: "attached_groups",
-      header: "Attached Groups",
-    },
-    {
-      key: "status",
-      header: "Status",
-    },
-    {
-      key: "enabled",
-      header: "Enabled",
-    },
   ],
 };
+
 class SearchResult extends React.Component {
   // We need a function to get from search API
-  //
-  render() {
+  fetchSearchApi = () => {};
+
+  render = () => {
     return (
       <DataTable {...searchResultProps}>
         {({
@@ -122,7 +104,7 @@ class SearchResult extends React.Component {
         )}
       </DataTable>
     );
-  }
+  };
 }
 
 export { SearchResult };
