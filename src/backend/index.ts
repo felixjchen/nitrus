@@ -61,7 +61,7 @@ app.get("/", async (req, res) => {
       res.redirect(redirect_uri);
     } else {
       let profile = await getProfile(access_token);
-      profile.profileUrl = profile.images[0].url;
+      // profile.profileUrl = profile.images[0].url;
       profile.access_token = access_token;
       room.users[profile.id] = profile;
       room.users[profile.id].refreshTimeout = setTimeout(
