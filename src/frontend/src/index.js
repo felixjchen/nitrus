@@ -19,4 +19,4 @@ socket.on("syncRes", (room) => {
   render(<Page room={room} />, document.getElementById("root"));
 });
 
-// render(<Page />, document.getElementById("root"));
+render(<Page />, document.getElementById("root"));
