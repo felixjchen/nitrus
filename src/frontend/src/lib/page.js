@@ -7,14 +7,13 @@ import {
   HeaderContainer,
   HeaderGlobalBar,
   HeaderGlobalAction,
-  Search,
   Grid,
   Row,
   Column,
 } from "carbon-components-react";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
-import { SearchResult } from "./search";
+import { SearchPane } from "./search";
 import styles from "./page.css";
 
 const bottomSheetProps = {
@@ -68,14 +67,7 @@ class Page extends React.Component {
                     https://stackoverflow.com/questions/41028498/react-passing-state-between-siblings*/}
                     {/* https://stackoverflow.com/questions/43146825/react-elegant-way-to-re-render-just-one-child-component */}
                     {/* We need to have these in their own componens while implementing shouldComponentUpdate for Search */}
-                    <Search
-                      id="search"
-                      placeHolderText={"Find a song"}
-                      size={"lg"}
-                      labelText="search"
-                      onChange={this.onChangeSearch}
-                    />
-                    <SearchResult searchQuery={""}></SearchResult>
+                    <SearchPane></SearchPane>
                   </Column>
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>

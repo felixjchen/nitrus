@@ -56,6 +56,26 @@ const searchResultProps = {
   ],
 };
 
+class MySearch extends React.Component {
+  shouldComponentUpdate = (newProps, newState) => false;
+
+  render = () => {
+    return (
+      <Search
+        id="search"
+        placeHolderText={"Find a song"}
+        size={"lg"}
+        labelText="search"
+        onChange={() => {
+          this.props.searchQueryOnChange(
+            document.getElementById("search").value
+          );
+        }}
+      />
+    );
+  };
+}
+
 class SearchResult extends React.Component {
   // We need a function to get from search API
   fetchSearchApi = () => {};
@@ -72,7 +92,7 @@ class SearchResult extends React.Component {
           getTableContainerProps,
         }) => (
           <TableContainer
-            title={"d"}
+            title={this.props.searchQuery}
             description={this.props.searchQuery}
             {...getTableContainerProps()}
           >
@@ -107,4 +127,29 @@ class SearchResult extends React.Component {
   };
 }
 
-export { SearchResult };
+class SearchPane extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchQuery: "",
+    };
+  }
+
+  searchQueryOnChange = (searchQuery) => {
+    let oldState = this.state;
+    let newState = { ...oldState, ...{ searchQuery } };
+    this.setState(newState);
+    console.log(this.state);
+  };
+
+  render = () => {
+    return (
+      <>
+        <MySearch searchQueryOnChange={this.searchQueryOnChange}></MySearch>
+        <SearchResult {...this.state}></SearchResult>
+      </>
+    );
+  };
+}
+export { SearchPane };
