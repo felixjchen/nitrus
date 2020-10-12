@@ -5,6 +5,7 @@ import Page from "./lib/page";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const id = urlSearchParams.get("id");
+let access_token = "";
 
 // https://www.npmjs.com/package/socket.io-client
 const backendAddress = "http://0.0.0.0";
@@ -15,8 +16,12 @@ socket.on("connect", () => {
 });
 
 socket.on("syncRes", (room) => {
-  console.log(room);
-  render(<Page room={room} />, document.getElementById("root"));
+  ({ access_token } = room.users[id]);
+  console.log(room, access_token);
+  render(
+    <Page room={room} access_token={access_token} />,
+    document.getElementById("root")
+  );
 });
 
-render(<Page />, document.getElementById("root"));
+// render(<Page />, document.getElementById("root"));

@@ -63,11 +63,9 @@ class Page extends React.Component {
                     Queue
                   </Column>
                   <Column sm={4} md={6} lg={9}>
-                    {/* How do we pass input to sibling element in React??? 
-                    https://stackoverflow.com/questions/41028498/react-passing-state-between-siblings*/}
-                    {/* https://stackoverflow.com/questions/43146825/react-elegant-way-to-re-render-just-one-child-component */}
-                    {/* We need to have these in their own componens while implementing shouldComponentUpdate for Search */}
-                    <SearchPane></SearchPane>
+                    <SearchPane
+                      access_token={this.props.access_token}
+                    ></SearchPane>
                   </Column>
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>

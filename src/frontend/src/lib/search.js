@@ -77,9 +77,6 @@ class MySearch extends React.Component {
 }
 
 class SearchResult extends React.Component {
-  // We need a function to get from search API
-  fetchSearchApi = () => {};
-
   render = () => {
     return (
       <DataTable {...searchResultProps}>
@@ -91,11 +88,7 @@ class SearchResult extends React.Component {
           getTableProps,
           getTableContainerProps,
         }) => (
-          <TableContainer
-            title={this.props.searchQuery}
-            description={this.props.searchQuery}
-            {...getTableContainerProps()}
-          >
+          <TableContainer {...getTableContainerProps()}>
             <Table {...getTableProps()} isSortable>
               <TableHead>
                 <TableRow>
@@ -132,15 +125,29 @@ class SearchPane extends React.Component {
     super(props);
 
     this.state = {
-      searchQuery: "",
+      items: [],
     };
   }
 
-  searchQueryOnChange = (searchQuery) => {
+  searchQueryOnChange = async (searchQuery) => {
     let oldState = this.state;
-    let newState = { ...oldState, ...{ searchQuery } };
+    let newItems = [];
+    if (searchQuery) {
+      let requestOptions = {
+        method: "GET",
+        headers: { Authorization: `Bearer ${this.props.access_token}` },
+        redirect: "follow",
+      };
+
+      let response = await fetch(
+        `https://api.spotify.com/v1/search?q=${searchQuery}&type=track`,
+        requestOptions
+      );
+      let responseObj = JSON.parse(await response.text());
+      newItems = responseObj.tracks.items;
+    }
+    let newState = { ...oldState, ...{ items: newItems } };
     this.setState(newState);
-    console.log(this.state);
   };
 
   render = () => {
