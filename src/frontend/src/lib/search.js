@@ -73,10 +73,12 @@ class SearchResult extends React.Component {
     const searchResultItems = this.props.items.map((item) => {
       return (
         <TableRow key={item.id}>
-          <TableCell key="name">{item.name}</TableCell>
-          <TableCell key="artist">{item.artists[0].name}</TableCell>
-          <TableCell key="album">{item.album.name}</TableCell>
-          <TableCell key="duration">
+          <TableCell key={`${item.id}:name`}>{item.name}</TableCell>
+          <TableCell key={`${item.id}:artist`}>
+            {item.artists[0].name}
+          </TableCell>
+          <TableCell key={`${item.id}:album`}>{item.album.name}</TableCell>
+          <TableCell key={`${item.id}:duration`}>
             {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
           </TableCell>
           <TableCell key="overflow">
@@ -99,21 +101,20 @@ class SearchResult extends React.Component {
           getTableContainerProps,
         }) => (
           <TableContainer {...getTableContainerProps()}>
-            <Table {...getTableProps()} isSortable>
+            <Table {...getTableProps()}>
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
                     <TableHeader
                       key={header.key}
                       {...getHeaderProps({ header })}
-                      isSortable
                     >
                       {header.header}
                     </TableHeader>
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody>{searchResultItems} </TableBody>
+              <TableBody>{searchResultItems}</TableBody>
             </Table>
           </TableContainer>
         )}
