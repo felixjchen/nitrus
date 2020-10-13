@@ -59,7 +59,7 @@ class Page extends React.Component {
               </Header>
               <Grid>
                 <Row>
-                  <Column id="queue" sm={{ span: 0 }} md={2} lg={3}>
+                  <Column id="DesktopQueue" sm={{ span: 0 }} md={2} lg={3}>
                     Queue
                   </Column>
                   <Column sm={4} md={6} lg={9}>
@@ -70,15 +70,7 @@ class Page extends React.Component {
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                     <SwipeableBottomSheet {...bottomSheetProps}>
-                      <div
-                        id="queue"
-                        style={{
-                          backgroundColor: "#f4f4f4",
-                          height: "calc(100vh - 3rem)",
-                        }}
-                      >
-                        Queue
-                      </div>
+                      <div id="MobileQueue">Queue</div>
                     </SwipeableBottomSheet>
                   </Column>
                 </Row>

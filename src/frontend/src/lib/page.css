@@ -13,9 +13,10 @@ body {
   z-index: 0;
 }
 
-#queue {
+#DesktopQueue,
+#MobileQueue {
   height: calc(100vh - 3rem);
-  background-color: #f4f4f4;
+  background-color: #161616;
 }
 
 .bx--search {
