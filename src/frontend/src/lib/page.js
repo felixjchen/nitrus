@@ -17,7 +17,7 @@ import { SearchPane } from "./search";
 import styles from "./page.css";
 
 const bottomSheetProps = {
-  overflowHeight: 64,
+  overflowHeight: 48,
   shadowTip: false,
   topShadow: false,
   overlay: false,
