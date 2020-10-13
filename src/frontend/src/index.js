@@ -11,7 +11,6 @@ let access_token = "";
 const backendAddress = "http://0.0.0.0";
 const socket = io(backendAddress);
 socket.on("connect", () => {
-  console.log(`Used with id ${id}, socket connected to server.`);
   socket.emit("syncReq", id);
 });
 

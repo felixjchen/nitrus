@@ -78,7 +78,11 @@ app.get("/", async (req, res) => {
 });
 
 io.on("connect", (socket) => {
+  let clientSocketId = socket.id;
+
   socket.on("syncReq", (id) => {
+    room.users[id].clientSocketId = clientSocketId;
+
     let roomRes = { ...room };
     for (let userId in roomRes.users) {
       let user = roomRes.users[userId];
