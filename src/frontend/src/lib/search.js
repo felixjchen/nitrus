@@ -17,23 +17,9 @@ const searchResultProps = {
     {
       id: "a",
       name: "Load Balancer 3",
-      protocol: "HTTP",
+      artist: "HTTP",
       port: 3000,
       rule: "Round robin",
-    },
-    {
-      id: "b",
-      name: "Load Balancer 1",
-      protocol: "HTTP",
-      port: 443,
-      rule: "Round robin",
-    },
-    {
-      id: "c",
-      name: "Load Balancer 2",
-      protocol: "HTTP",
-      port: 80,
-      rule: "DNS delegation",
     },
   ],
   headers: [
@@ -42,16 +28,16 @@ const searchResultProps = {
       header: "Name",
     },
     {
-      key: "protocol",
-      header: "Protocol",
+      key: "artist",
+      header: "Artist",
     },
     {
-      key: "port",
-      header: "Port",
+      key: "album",
+      header: "Album",
     },
     {
-      key: "rule",
-      header: "Rule",
+      key: "duration",
+      header: "Duration",
     },
   ],
 };
@@ -78,6 +64,19 @@ class MySearch extends React.Component {
 
 class SearchResult extends React.Component {
   render = () => {
+    const searchResultItems = this.props.items.map((item) => {
+      return (
+        <TableRow key={item.id}>
+          <TableCell key="name">{item.name}</TableCell>
+          <TableCell key="artist">{item.artists[0].name}</TableCell>
+          <TableCell key="album">{item.album.name}</TableCell>
+          <TableCell key="duration">
+            {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
+          </TableCell>
+        </TableRow>
+      );
+    });
+
     return (
       <DataTable {...searchResultProps}>
         {({
@@ -103,15 +102,7 @@ class SearchResult extends React.Component {
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.id} {...getRowProps({ row })}>
-                    {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>{cell.value}</TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </TableBody>
+              <TableBody>{searchResultItems} </TableBody>
             </Table>
           </TableContainer>
         )}
