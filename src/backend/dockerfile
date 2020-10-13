@@ -2,9 +2,10 @@ FROM node:14.2
 
 COPY package-lock.json .
 COPY package.json .
+RUN npm install -g ts-node
 RUN npm install 
 
 COPY lib .
 COPY index.ts .
 
-CMD npm tsc
+CMD ts-node index.ts
