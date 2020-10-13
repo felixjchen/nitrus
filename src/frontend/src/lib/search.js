@@ -10,6 +10,8 @@ import {
   TableBody,
   TableCell,
   Search,
+  OverflowMenu,
+  OverflowMenuItem,
 } from "carbon-components-react";
 import styles from "./search.css";
 const searchResultProps = {
@@ -38,6 +40,10 @@ const searchResultProps = {
     {
       key: "duration",
       header: "Duration",
+    },
+    {
+      key: "overflow",
+      header: "",
     },
   ],
 };
@@ -72,6 +78,11 @@ class SearchResult extends React.Component {
           <TableCell key="album">{item.album.name}</TableCell>
           <TableCell key="duration">
             {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
+          </TableCell>
+          <TableCell key="overflow">
+            <OverflowMenu flipped>
+              <OverflowMenuItem itemText="Queue"></OverflowMenuItem>
+            </OverflowMenu>
           </TableCell>
         </TableRow>
       );
