@@ -72,7 +72,7 @@ class SearchResult extends React.Component {
   render = () => {
     const searchResultItems = this.props.items.map((item) => {
       return (
-        <TableRow key={item.id}>
+        <TableRow id={item.id} key={item.id}>
           <TableCell key={`${item.id}:name`}>{item.name}</TableCell>
           <TableCell key={`${item.id}:artist`}>
             {item.artists[0].name}
