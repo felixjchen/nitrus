@@ -1,7 +1,7 @@
 import * as fetch from "../node_modules/node-fetch";
 import { client_id, client_secret, redirect_uri } from "../constants";
 
-const getAccessAndRefresh = async (code) => {
+const getAccessAndRefresh = async (code: string) => {
   let raw = {
     grant_type: "authorization_code",
     redirect_uri,
@@ -27,7 +27,7 @@ const getAccessAndRefresh = async (code) => {
   return JSON.parse(await response.text());
 };
 
-const getAccess = async (refresh_token) => {
+const getAccess = async (refresh_token: string) => {
   let raw = {
     grant_type: "refresh_token",
     refresh_token,
