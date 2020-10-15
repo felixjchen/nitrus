@@ -1,6 +1,5 @@
 import * as fetch from "../node_modules/node-fetch";
-import * as secrets from "../secrets.json";
-const { client_id, client_secret, redirect_uri } = secrets;
+import { client_id, client_secret, redirect_uri } from "../constants";
 
 const getAccessAndRefresh = async (code) => {
   let raw = {

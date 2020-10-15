@@ -6,15 +6,17 @@ import * as querystring from "querystring";
 import { getAccessAndRefresh, getAccess } from "./lib/spotify-authorization";
 import { getProfile } from "./lib/spotify-helpers";
 
-import * as secrets from "./secrets.json";
-const { client_id, client_secret, redirect_uri } = secrets;
+import {
+  client_id,
+  client_secret,
+  redirect_uri,
+  frontend_url,
+} from "./constants";
 
 const app = express();
 const httpServer = http.createServer(app);
 const io = socketio(httpServer);
-const port = 80;
-
-const frontend_url = "http://localhost:3000";
+const port = process.env.PORT || 80;
 
 // Need to cleanup refresh listener on exit
 let room = { queue: [], users: {} };
@@ -81,7 +83,9 @@ io.on("connect", (socket) => {
   let clientSocketId = socket.id;
 
   socket.on("syncReq", (id) => {
-    room.users[id].clientSocketId = clientSocketId;
+    if (room.users[id]) {
+      room.users[id].clientSocketId = clientSocketId;
+    }
 
     let roomRes = { ...room };
     for (let userId in roomRes.users) {

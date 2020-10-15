@@ -5,7 +5,8 @@ COPY package.json .
 RUN npm install -g ts-node
 RUN npm install 
 
-COPY lib .
+ADD lib ./lib
+COPY constants.ts .
 COPY index.ts .
 
 CMD ts-node index.ts
