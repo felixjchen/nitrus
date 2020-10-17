@@ -8,7 +8,7 @@ let redirect_uri = undefined;
 
 if (production) {
   ({ client_id, client_secret, redirect_uri } = process.env);
-  frontend_url = "https://nitrouz.netlify.app/";
+  frontend_url = "https://nitr0us.azurewebsites.net";
 } else {
   ({ client_id, client_secret, redirect_uri } =
     require("./secrets.json") || undefined);

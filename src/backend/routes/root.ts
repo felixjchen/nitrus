@@ -1,11 +1,18 @@
 import * as express from "express";
 import * as querystring from "querystring";
+import * as path from "path";
 
 import { getAccessAndRefresh, getAccess } from "../lib/spotify-authorization";
 import { getProfile } from "../lib/spotify-helpers";
-import { client_id, redirect_uri, frontend_url, room } from "../global";
+import {
+  client_id,
+  redirect_uri,
+  room,
+  frontend_url,
+  production,
+} from "../global";
 
-const indexRouter = express.Router();
+const rootRouter = express.Router();
 
 const refresh = async (id: string, refresh_token: string) => {
   let { access_token, expires_in } = await getAccess(refresh_token);
@@ -19,7 +26,11 @@ const refresh = async (id: string, refresh_token: string) => {
   console.log(`Refreshed acces_token for user ${room.users[id].display_name}`);
 };
 
-indexRouter.get("/", async (req, res) => {
+rootRouter.get("/", async (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../build/index.html`));
+});
+
+rootRouter.get("/login", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
     let scopes = "user-read-email user-modify-playback-state";
@@ -40,6 +51,7 @@ indexRouter.get("/", async (req, res) => {
       error,
       expires_in,
     } = await getAccessAndRefresh(req.query.code);
+
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
     } else {
@@ -51,16 +63,22 @@ indexRouter.get("/", async (req, res) => {
         () => refresh(profile.id, refresh_token),
         (expires_in - 2) * 1000
       );
+      console.log(room);
       console.log(`User ${profile.display_name} has authenticated`);
-      res.redirect(
-        `${frontend_url}?${querystring.stringify({ id: profile.id })}`
-      );
+
+      if (production) {
+        res.redirect(`/?${querystring.stringify({ id: profile.id })}`);
+      } else {
+        res.redirect(
+          `${frontend_url}?${querystring.stringify({ id: profile.id })}`
+        );
+      }
     }
   }
 });
 
-indexRouter.get("/logout", (req, res) => {
+rootRouter.get("/logout", (req, res) => {
   res.send("logout");
 });
 
-export { indexRouter };
+export { rootRouter };

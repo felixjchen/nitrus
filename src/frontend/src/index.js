@@ -9,7 +9,7 @@ let access_token = "";
 
 // https://www.npmjs.com/package/socket.io-client
 // const backendAddress = "http://0.0.0.0";
-const backendAddress = "https://nitrouz.herokuapp.com/";
+const backendAddress = "https://nitr0us.azurewebsites.net";
 const socket = io(backendAddress);
 socket.on("connect", () => {
   socket.emit("syncReq", id);
