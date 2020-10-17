@@ -78,6 +78,8 @@ rootRouter.get("/login", async (req, res) => {
 });
 
 rootRouter.get("/logout", (req, res) => {
+  // clearing cookies here works
+  // https://accounts.spotify.com/en/status
   res.send("logout");
 });
 
