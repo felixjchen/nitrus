@@ -6,7 +6,8 @@ RUN npm install -g ts-node
 RUN npm install 
 
 ADD lib ./lib
-COPY constants.ts .
+ADD routes ./routes
+COPY global.ts .
 COPY index.ts .
 
 CMD ts-node index.ts
