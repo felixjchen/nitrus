@@ -5,7 +5,7 @@ import { getAccessAndRefresh, getAccess } from "../lib/spotify-authorization";
 import { getProfile } from "../lib/spotify-helpers";
 import { client_id, redirect_uri, frontend_url, room } from "../global";
 
-const router = express.Router();
+const indexRouter = express.Router();
 
 const refresh = async (id: string, refresh_token: string) => {
   let { access_token, expires_in } = await getAccess(refresh_token);
@@ -19,7 +19,7 @@ const refresh = async (id: string, refresh_token: string) => {
   console.log(`Refreshed acces_token for user ${room.users[id].display_name}`);
 };
 
-router.get("/", async (req, res) => {
+indexRouter.get("/", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
     let scopes = "user-read-email user-modify-playback-state";
@@ -59,8 +59,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
+indexRouter.get("/logout", (req, res) => {
   res.send("logout");
 });
 
-export { router };
+export { indexRouter };

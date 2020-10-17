@@ -3,14 +3,14 @@ import * as express from "./node_modules/express";
 import * as socketio from "./node_modules/socket.io";
 
 import { room } from "./global";
-import { router } from "./routes/index";
+import { indexRouter } from "./routes/index";
 
 const app = express();
 const httpServer = http.createServer(app);
 const io = socketio(httpServer);
 const port = process.env.PORT || 80;
 
-app.use("/", router);
+app.use("/", indexRouter);
 
 io.on("connect", (socket) => {
   let clientSocketId = socket.id;
