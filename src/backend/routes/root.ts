@@ -70,18 +70,14 @@ rootRouter.get("/login", async (req, res) => {
       console.log(`User ${profile.display_name} has authenticated`);
 
       if (production) {
-        res.redirect(`/?${querystring.stringify({ id: profile.id })}`);
+        res.redirect(`/?${querystring.stringify({ spotifyID: profile.id })}`);
       } else {
         res.redirect(
-          `${frontend_url}?${querystring.stringify({ id: profile.id })}`
+          `${frontend_url}?${querystring.stringify({ spotifyID: profile.id })}`
         );
       }
     }
   }
 });
-
-// rootRouter.get("/logout", (req, res) => {
-//   res.redirect("");
-// });
 
 export { rootRouter };

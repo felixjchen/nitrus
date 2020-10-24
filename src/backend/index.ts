@@ -1,7 +1,7 @@
 import * as http from "http";
 import * as express from "./node_modules/express";
 import * as path from "path";
-import { initSocketIO } from "./lib/sockets";
+import { initSocketIO } from "./lib/socketio-events";
 
 import { rootRouter } from "./routes/root";
 
