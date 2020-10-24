@@ -40,12 +40,7 @@ class Page extends React.Component {
           render={() => (
             <>
               <Header aria-label="Nitrous">
-                <HeaderName
-                  // href="https://github.com/felixjchen/spotify-together"
-                  prefix=""
-                >
-                  Nitrous
-                </HeaderName>
+                <HeaderName prefix="">Nitrous</HeaderName>
                 <HeaderNavigation aria-label="Nitrous">
                   <img src={this.props.profileUrl}></img>
                 </HeaderNavigation>
@@ -80,6 +75,7 @@ class Page extends React.Component {
             </>
           )}
         />
+        <pre>{JSON.stringify(this.props, null, 2)}</pre>
       </div>
     );
   }

@@ -1,6 +1,13 @@
 import * as socketio from "socket.io";
 import { room } from "../global";
 
+const simplifiedRoomKeys = [
+  "display_name",
+  "email",
+  "href",
+  "id",
+  "profileUrl",
+];
 // For user with clientSpotifyID, get a simplified room
 const getSimplifiedRoom = () => {
   let simpleRoom = { queue: room.queue, users: {} };
@@ -10,7 +17,7 @@ const getSimplifiedRoom = () => {
     let user = room.users[userID];
     // We only keep certain keys for everyone, and we will send every client their spotify access toekn
     for (let key in user) {
-      if (["display_name", "email", "href", "id", "profileUrl"].includes(key)) {
+      if (simplifiedRoomKeys.includes(key)) {
         simpleRoom.users[userID][key] = user[key];
       }
     }

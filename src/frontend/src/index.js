@@ -21,13 +21,18 @@ socket.on("connect", () => {
 socket.on("setRoom", (simpleRoom) => {
   room = simpleRoom;
   console.log(room);
+  render(
+    <Page room={room} access_token={access_token} />,
+    document.getElementById("root")
+  );
 });
 
-socket.on("setAccessToken", (access_token) => {
-  if (!access_token) {
+socket.on("setAccessToken", (accessToken) => {
+  if (!accessToken) {
     window.location.replace(`${backendURL}/login`);
   }
-  access_token = access_token;
+
+  access_token = accessToken;
   console.log(access_token);
   render(
     <Page room={room} access_token={access_token} />,

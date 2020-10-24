@@ -57,16 +57,17 @@ rootRouter.get("/login", async (req, res) => {
     } else {
       let profile = await getProfile(access_token);
 
+      profile.access_token = access_token;
       if (profile.images[0].url) {
         profile.profileUrl = profile.images[0].url;
       }
-
-      profile.access_token = access_token;
-      room.users[profile.id] = profile;
-      room.users[profile.id].refreshTimeout = setTimeout(
+      profile.refreshTimeout = setTimeout(
         () => refresh(profile.id, refresh_token),
         (expires_in - 2) * 1000
       );
+
+      room.users[profile.id] = profile;
+
       console.log(`User ${profile.display_name} has authenticated`);
 
       if (production) {
