@@ -56,14 +56,17 @@ rootRouter.get("/login", async (req, res) => {
       res.redirect(redirect_uri);
     } else {
       let profile = await getProfile(access_token);
-      // profile.profileUrl = profile.images[0].url;
+
+      if (profile.images[0].url) {
+        profile.profileUrl = profile.images[0].url;
+      }
+
       profile.access_token = access_token;
       room.users[profile.id] = profile;
       room.users[profile.id].refreshTimeout = setTimeout(
         () => refresh(profile.id, refresh_token),
         (expires_in - 2) * 1000
       );
-      console.log(room);
       console.log(`User ${profile.display_name} has authenticated`);
 
       if (production) {
@@ -77,10 +80,8 @@ rootRouter.get("/login", async (req, res) => {
   }
 });
 
-rootRouter.get("/logout", (req, res) => {
-  // clearing cookies here works
-  // https://accounts.spotify.com/en/status
-  res.send("logout");
-});
+// rootRouter.get("/logout", (req, res) => {
+//   res.redirect("");
+// });
 
 export { rootRouter };

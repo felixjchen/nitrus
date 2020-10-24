@@ -7,10 +7,11 @@ const initSocketIO = (httpServer) => {
   io.on("connect", (socket) => {
     let clientSocketId = socket.id;
 
-    socket.on("syncReq", (id) => {
+    socket.on("getRoom", (id) => {
       if (room.users[id]) {
         room.users[id].clientSocketId = clientSocketId;
       }
+      console.log(room.users[id]);
 
       let roomRes = { ...room };
       for (let userId in roomRes.users) {
@@ -28,7 +29,7 @@ const initSocketIO = (httpServer) => {
           }
         }
       }
-      socket.emit("syncRes", roomRes);
+      socket.emit("setRoom", roomRes);
     });
   });
 

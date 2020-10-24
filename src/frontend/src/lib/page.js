@@ -29,6 +29,10 @@ class Page extends React.Component {
     super(props);
   }
 
+  spotifyLogout = () => {
+    window.location.replace("https://www.spotify.com/logout/");
+  };
+
   render() {
     return (
       <div id="page">
@@ -49,9 +53,7 @@ class Page extends React.Component {
                   <HeaderGlobalAction
                     id="logoutIcon"
                     aria-label="Logout"
-                    onClick={() => {
-                      console.log("logout button clicked");
-                    }}
+                    onClick={this.spotifyLogout}
                   >
                     <Logout20 />
                   </HeaderGlobalAction>
