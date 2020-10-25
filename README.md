@@ -1,6 +1,6 @@
 # spotify vote
 
-- https://nitr0us.azurewebsites.net/login
+- https://nitrus.azurewebsites.net/login
 - Realtime application for users to vote on a Spotify music queue
 
 <!-- ## onboarding

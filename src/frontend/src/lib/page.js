@@ -49,9 +49,9 @@ class Page extends React.Component {
         <HeaderContainer
           render={() => (
             <>
-              <Header aria-label="Nitrous">
-                <HeaderName prefix="">Nitrous</HeaderName>
-                <HeaderNavigation aria-label="Nitrous">
+              <Header aria-label="Nitrus">
+                <HeaderName prefix="">Nitrus</HeaderName>
+                <HeaderNavigation aria-label="Nitrus">
                   {profileImages}
                 </HeaderNavigation>
                 <HeaderGlobalBar>
