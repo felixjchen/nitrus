@@ -31,7 +31,7 @@ const initSocketIO = (httpServer) => {
     socket.on("disconnect", () => {
       for (let userID in room.users) {
         if (room.users[userID].clientSocketID == clientSocketID) {
-          console.log(userID, "has disconnected");
+          console.log(room.users[userID].display_name, "has disconnected");
           delete room.users[userID];
           break;
         }
