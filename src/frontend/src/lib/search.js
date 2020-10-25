@@ -15,15 +15,7 @@ import {
 } from "carbon-components-react";
 import styles from "./search.css";
 const searchResultProps = {
-  rows: [
-    {
-      id: "a",
-      name: "Load Balancer 3",
-      artist: "HTTP",
-      port: 3000,
-      rule: "Round robin",
-    },
-  ],
+  rows: [],
   headers: [
     {
       key: "name",
@@ -77,7 +69,13 @@ class SearchResult extends React.Component {
           <TableCell key={`${item.id}:artist`}>
             {item.artists[0].name}
           </TableCell>
-          <TableCell key={`${item.id}:album`}>{item.album.name}</TableCell>
+          <TableCell key={`${item.id}:album`}>
+            {item.album.name}
+            <img
+              src={`${item.album.images[0].url}`}
+              className="albumPhoto"
+            ></img>
+          </TableCell>
           <TableCell key={`${item.id}:duration`}>
             {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
           </TableCell>
