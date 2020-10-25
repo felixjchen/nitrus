@@ -122,12 +122,17 @@ class SearchResult extends React.Component {
 }
 
 class SearchPane extends React.Component {
+  abortController = new AbortController();
   constructor(props) {
     super(props);
 
     this.state = {
       items: [],
     };
+  }
+
+  componentWillUnmount() {
+    this.abortController.abort();
   }
 
   searchQueryOnChange = async (searchQuery) => {
@@ -138,6 +143,7 @@ class SearchPane extends React.Component {
         method: "GET",
         headers: { Authorization: `Bearer ${this.props.access_token}` },
         redirect: "follow",
+        signal: this.abortController.signal,
       };
 
       let response = await fetch(

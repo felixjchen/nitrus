@@ -2,7 +2,7 @@ import * as express from "express";
 import * as querystring from "querystring";
 import * as path from "path";
 
-import { getAccessAndRefresh, getAccess } from "../lib/spotify-authorization";
+import { getAccessAndRefresh } from "../lib/spotify-authorization";
 import { getProfile } from "../lib/spotify-helpers";
 import {
   client_id,
@@ -13,18 +13,6 @@ import {
 } from "../global";
 
 const rootRouter = express.Router();
-
-const refresh = async (id: string, refresh_token: string) => {
-  let { access_token, expires_in } = await getAccess(refresh_token);
-
-  room.users[id].access_token = access_token;
-  room.users[id].refreshTimeout = setTimeout(
-    () => refresh(id, refresh_token),
-    (expires_in - 2) * 1000
-  );
-
-  console.log(`Refreshed acces_token for user ${room.users[id].display_name}`);
-};
 
 rootRouter.get("/", async (req, res) => {
   res.sendFile(path.resolve(`${__dirname}/../build/index.html`));
@@ -56,18 +44,13 @@ rootRouter.get("/login", async (req, res) => {
       res.redirect(redirect_uri);
     } else {
       let profile = await getProfile(access_token);
-
       profile.access_token = access_token;
+      profile.refresh_token = refresh_token;
       if (profile.images[0].url) {
         profile.profileImageURL = profile.images[0].url;
       }
-      profile.refreshTimeout = setTimeout(
-        () => refresh(profile.id, refresh_token),
-        (expires_in - 2) * 1000
-      );
 
       room.users[profile.id] = profile;
-
       console.log(`User ${profile.display_name} has authenticated`);
 
       if (production) {

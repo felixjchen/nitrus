@@ -27,11 +27,11 @@ socket.on("setRoom", (simpleRoom) => {
   );
 });
 
-socket.on("setAccessToken", (accessToken) => {
-  if (!accessToken) {
-    window.location.replace(`${backendURL}/login`);
-  }
+socket.on("redirectToLogin", () => {
+  window.location.replace(`${backendURL}/login`);
+});
 
+socket.on("setAccessToken", (accessToken) => {
   access_token = accessToken;
   console.log(access_token);
   render(
