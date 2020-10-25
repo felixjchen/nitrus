@@ -59,7 +59,7 @@ rootRouter.get("/login", async (req, res) => {
 
       profile.access_token = access_token;
       if (profile.images[0].url) {
-        profile.profileUrl = profile.images[0].url;
+        profile.profileImageURL = profile.images[0].url;
       }
       profile.refreshTimeout = setTimeout(
         () => refresh(profile.id, refresh_token),

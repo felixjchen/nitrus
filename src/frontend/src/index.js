@@ -8,7 +8,7 @@ const spotifyID = urlSearchParams.get("spotifyID");
 
 // https://www.npmjs.com/package/socket.io-client
 const backendURL = "http://0.0.0.0";
-// const backendAddress = "https://nitr0us.azurewebsites.net";
+// const backendURL = "https://nitr0us.azurewebsites.net";
 
 let access_token = undefined;
 let room = undefined;

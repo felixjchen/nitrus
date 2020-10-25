@@ -6,7 +6,7 @@ const simplifiedRoomKeys = [
   "email",
   "href",
   "id",
-  "profileUrl",
+  "profileImageURL",
 ];
 // For user with clientSpotifyID, get a simplified room
 const getSimplifiedRoom = () => {

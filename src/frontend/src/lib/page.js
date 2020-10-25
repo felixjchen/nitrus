@@ -34,6 +34,16 @@ class Page extends React.Component {
   };
 
   render() {
+    const profileImages = [];
+    for (let userID in this.props.room.users) {
+      profileImages.push(
+        <img
+          key={`${userID}_profilePhoto`}
+          className="profilePhoto"
+          src={this.props.room.users[userID].profileImageURL}
+        ></img>
+      );
+    }
     return (
       <div id="page">
         <HeaderContainer
@@ -42,7 +52,7 @@ class Page extends React.Component {
               <Header aria-label="Nitrous">
                 <HeaderName prefix="">Nitrous</HeaderName>
                 <HeaderNavigation aria-label="Nitrous">
-                  <img src={this.props.profileUrl}></img>
+                  {profileImages}
                 </HeaderNavigation>
                 <HeaderGlobalBar>
                   <HeaderGlobalAction

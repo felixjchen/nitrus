@@ -9,6 +9,17 @@ body {
 .bx--header {
   position: static;
 }
+
+.profilePhoto {
+  object-fit: cover;
+  max-width: 36px;
+  max-height: 36px;
+  margin: 6px;
+}
+
+.bx--header__nav {
+  display: block;
+}
 .bx--search-magnifier {
   z-index: 0;
 }
