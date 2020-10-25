@@ -2,7 +2,6 @@ import * as socketio from "socket.io";
 import { room } from "../global";
 import {
   getSimplifiedRoom,
-  isAuthorized,
   setAccessTokenFromRefreshToken,
 } from "./socketio-helpers";
 
@@ -19,20 +18,20 @@ const initSocketIO = (httpServer) => {
     let clientSocketID = socket.id;
 
     socket.on("init", (clientSpotifyID) => {
-      socket.join("room0");
-      if (room.users[clientSpotifyID]) {
-        room.users[clientSpotifyID].clientSocketID = clientSocketID;
+      // User not logged into backend..
+      if (!room.users[clientSpotifyID]) {
+        socket.emit("redirectToLogin");
+        return;
       }
+
+      socket.join("room0");
+      room.users[clientSpotifyID].clientSocketID = clientSocketID;
 
       // We update entire room about new user
       updateRoom();
 
-      if (!isAuthorized(clientSpotifyID)) {
-        socket.emit("redirectToLogin");
-      } else {
-        // Send client their access token and start refresh token timeout
-        setAccessTokenFromRefreshToken(clientSpotifyID, socket);
-      }
+      // Send client their access token and start refresh token timeout
+      setAccessTokenFromRefreshToken(clientSpotifyID, socket);
     });
 
     socket.on("disconnect", () => {

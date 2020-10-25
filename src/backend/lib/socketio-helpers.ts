@@ -9,6 +9,7 @@ const simplifiedRoomKeys = [
   "id",
   "profileImageURL",
 ];
+
 // For user with clientSpotifyID, get a simplified room
 const getSimplifiedRoom = () => {
   let simpleRoom = { queue: room.queue, users: {} };
@@ -27,27 +28,21 @@ const getSimplifiedRoom = () => {
   return simpleRoom;
 };
 
-const isAuthorized = (clientSpotifyID: string) => {
-  return (
-    room.users[clientSpotifyID] && room.users[clientSpotifyID].access_token
-  );
-};
-
 const setAccessTokenFromRefreshToken = async (spotifyID: string, socket) => {
+  // Fetch from spotify API
   let refresh_token = room.users[spotifyID].refresh_token;
   let { access_token, expires_in } = await getAccess(refresh_token);
 
+  // Update Room
   room.users[spotifyID].access_token = access_token;
+  // Set new timeout
   room.users[spotifyID].refreshTimeout = setTimeout(
     () => setAccessTokenFromRefreshToken(spotifyID, socket),
-    // (expires_in - 2) * 1000
-    20000
+    (expires_in - 2) * 1000
   );
-
+  // Update client
   socket.emit("setAccessToken", access_token);
 
-  console.log(
-    `Refreshed access_token for user ${room.users[spotifyID].display_name}`
-  );
+  console.log(`Set new access_token for ${room.users[spotifyID].display_name}`);
 };
-export { getSimplifiedRoom, isAuthorized, setAccessTokenFromRefreshToken };
+export { getSimplifiedRoom, setAccessTokenFromRefreshToken };

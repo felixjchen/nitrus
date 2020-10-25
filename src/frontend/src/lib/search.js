@@ -122,6 +122,7 @@ class SearchResult extends React.Component {
 }
 
 class SearchPane extends React.Component {
+  // https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
   abortController = new AbortController();
   constructor(props) {
     super(props);

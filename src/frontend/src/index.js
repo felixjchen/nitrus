@@ -18,22 +18,22 @@ socket.on("connect", () => {
   socket.emit("init", spotifyID);
 });
 
+socket.on("redirectToLogin", () => {
+  window.location.replace(`${backendURL}/login`);
+});
+
 socket.on("setRoom", (simpleRoom) => {
   room = simpleRoom;
-  console.log(room);
+  console.log("new room", room);
   render(
     <Page room={room} access_token={access_token} />,
     document.getElementById("root")
   );
 });
 
-socket.on("redirectToLogin", () => {
-  window.location.replace(`${backendURL}/login`);
-});
-
 socket.on("setAccessToken", (accessToken) => {
   access_token = accessToken;
-  console.log(access_token);
+  console.log("new access token", access_token);
   render(
     <Page room={room} access_token={access_token} />,
     document.getElementById("root")
