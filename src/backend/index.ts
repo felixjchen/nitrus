@@ -8,7 +8,7 @@ import { rootRouter } from "./routes/root";
 const app = express();
 const httpServer = http.createServer(app);
 const io = initSocketIO(httpServer);
-const port = process.env.PORT || 80;
+const port = 80;
 
 app.use("/static", express.static(path.resolve(`${__dirname}/build/static/`)));
 app.use("/", rootRouter);
