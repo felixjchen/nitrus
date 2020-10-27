@@ -33,12 +33,9 @@ rootRouter.get("/login", async (req, res) => {
     );
   } else {
     // Has authenticated
-    let {
-      access_token,
-      refresh_token,
-      error,
-      expires_in,
-    } = await getAccessAndRefresh(req.query.code);
+    let { access_token, refresh_token, error } = await getAccessAndRefresh(
+      req.query.code
+    );
 
     if (error == "invalid_grant") {
       res.redirect(redirect_uri);
@@ -49,6 +46,8 @@ rootRouter.get("/login", async (req, res) => {
       if (profile.images[0].url) {
         profile.profileImageURL = profile.images[0].url;
       }
+
+      console.log(frontend_url, production);
 
       room.users[profile.id] = profile;
       console.log(`User ${profile.display_name} has authenticated`);
