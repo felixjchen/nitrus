@@ -1,4 +1,4 @@
-import * as fetch from "../node_modules/node-fetch";
+import * as fetch from "node-fetch";
 
 // https://github.com/felixjchen/spotify-together/issues/2
 

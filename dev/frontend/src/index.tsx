@@ -7,8 +7,8 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
 
 // https://www.npmjs.com/package/socket.io-client
-const backendURL = "http://0.0.0.0";
-// const backendURL = "https://nitrus.azurewebsites.net";
+// const backendURL = "http://0.0.0.0";
+const backendURL = "https://nitrus.azurewebsites.net";
 
 let access_token: string = "";
 let room: object = { queue: [], users: {} };

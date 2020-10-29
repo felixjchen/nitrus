@@ -1,5 +1,5 @@
 import * as http from "http";
-import * as express from "./node_modules/express";
+import * as express from "express";
 import * as path from "path";
 import { initSocketIO } from "./lib/socketio-events";
 

@@ -1,4 +1,4 @@
-import * as fetch from "../node_modules/node-fetch";
+import * as fetch from "node-fetch";
 
 const getProfile = async (access_token) => {
   let requestOptions = {
