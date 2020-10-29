@@ -46,9 +46,6 @@ rootRouter.get("/login", async (req, res) => {
       if (profile.images[0].url) {
         profile.profileImageURL = profile.images[0].url;
       }
-
-      console.log(frontend_url, production);
-
       room.users[profile.id] = profile;
       console.log(`User ${profile.display_name} has authenticated`);
 

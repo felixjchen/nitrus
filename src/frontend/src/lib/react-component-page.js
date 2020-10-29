@@ -13,8 +13,8 @@ import {
 } from "carbon-components-react";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
-import { SearchPane } from "./search";
-import styles from "./page.css";
+import { SearchPane } from "./react-component-search";
+import styles from "./react-component-page.css";
 
 const bottomSheetProps = {
   overflowHeight: 48,
@@ -66,10 +66,10 @@ class Page extends React.Component {
               </Header>
               <Grid>
                 <Row>
-                  <Column id="DesktopQueue" sm={{ span: 0 }} md={2} lg={3}>
+                  <Column id="DesktopQueue" sm={{ span: 0 }} md={2} lg={2}>
                     Queue
                   </Column>
-                  <Column sm={4} md={6} lg={9}>
+                  <Column sm={4} md={6} lg={10}>
                     <SearchPane
                       access_token={this.props.access_token}
                     ></SearchPane>

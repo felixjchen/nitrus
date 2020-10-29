@@ -13,7 +13,7 @@ import {
   OverflowMenu,
   OverflowMenuItem,
 } from "carbon-components-react";
-import styles from "./search.css";
+import styles from "./react-component-search.css";
 const searchResultProps = {
   rows: [],
   headers: [

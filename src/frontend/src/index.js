@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import io from "socket.io-client";
-import Page from "./lib/page";
+import Page from "./lib/react-component-page";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
@@ -14,6 +14,9 @@ let access_token = undefined;
 let room = undefined;
 
 const socket = io(backendURL);
+///////////////////////////////////////////////////////////////////////////////////////
+// Socket events
+///////////////////////////////////////////////////////////////////////////////////////
 socket.on("connect", () => {
   socket.emit("init", spotifyID);
 });
@@ -39,5 +42,3 @@ socket.on("setAccessToken", (accessToken) => {
     document.getElementById("root")
   );
 });
-
-// render(<Page />, document.getElementById("root"));
