@@ -67,7 +67,7 @@ class Page extends React.Component {
               <Grid>
                 <Row>
                   <Column id="DesktopQueue" sm={{ span: 0 }} md={2} lg={2}>
-                    Queue
+                    <pre>{JSON.stringify(this.props, null, 2)}</pre>
                   </Column>
                   <Column sm={4} md={6} lg={10}>
                     <SearchPane
@@ -77,7 +77,9 @@ class Page extends React.Component {
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                     <SwipeableBottomSheet {...bottomSheetProps}>
-                      <div id="MobileQueue"></div>
+                      <div id="MobileQueue">
+                        <pre>{JSON.stringify(this.props, null, 2)}</pre>
+                      </div>
                     </SwipeableBottomSheet>
                   </Column>
                 </Row>
@@ -85,7 +87,6 @@ class Page extends React.Component {
             </>
           )}
         />
-        {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>
     );
   }
