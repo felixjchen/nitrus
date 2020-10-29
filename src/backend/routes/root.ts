@@ -10,7 +10,7 @@ import {
   room,
   frontend_url,
   production,
-} from "../global";
+} from "../lib/global";
 
 const rootRouter = express.Router();
 

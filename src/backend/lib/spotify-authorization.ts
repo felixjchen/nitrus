@@ -1,5 +1,5 @@
 import * as fetch from "../node_modules/node-fetch";
-import { client_id, client_secret, redirect_uri } from "../global";
+import { client_id, client_secret, redirect_uri } from "./global";
 
 const getAccessAndRefresh = async (code: string) => {
   let raw = {

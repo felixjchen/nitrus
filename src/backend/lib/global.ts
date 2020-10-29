@@ -11,7 +11,7 @@ if (production) {
   frontend_url = "https://nitrus.azurewebsites.net";
 } else {
   ({ client_id, client_secret, redirect_uri } =
-    require("./secrets.json") || undefined);
+    require("../secrets.json") || undefined);
 }
 
 let room = { queue: [], users: {} };

@@ -1,5 +1,5 @@
 import * as socketio from "socket.io";
-import { room } from "../global";
+import { room } from "./global";
 import {
   getSimplifiedRoom,
   setAccessTokenFromRefreshToken,
