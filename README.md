@@ -3,6 +3,21 @@
 - https://nitrus.azurewebsites.net/login
 - Realtime application for users to vote on a Spotify music queue
 
+## resources
+
+### Spotify Web API
+
+- https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
+
+### React Carbon
+
+- https://react.carbondesignsystem.com/?path=/docs/overflowmenu--with-links
+
+### React + Sockets
+
+- https://medium.com/@rossbulat/react-hooks-managing-web-sockets-with-useeffect-and-usestate-2dfc30eeceec
+- https://www.valentinog.com/blog/socket-react/#socketio-react-and-nodejs-implementing-the-react-client
+
 <!-- ## onboarding
 
 - postman https://www.postman.com/downloads/
