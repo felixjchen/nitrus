@@ -62,9 +62,6 @@ class MySearch extends React.Component {
 
 class SearchResult extends React.Component {
   render = () => {
-    {
-      console.log(this.props.items);
-    }
     const searchResultItems = this.props.items.map((item) => {
       return (
         <TableRow id={item.id} key={item.id}>
@@ -150,7 +147,7 @@ class SearchPane extends React.Component {
     if (searchQuery) {
       let requestOptions = {
         method: "GET",
-        headers: { Authorization: `Bearer ${this.props.access_token}` },
+        headers: { Authorization: `Bearer ${this.props.accessToken}` },
         redirect: "follow",
         signal: this.abortController.signal,
       };
