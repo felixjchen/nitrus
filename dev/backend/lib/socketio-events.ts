@@ -14,6 +14,12 @@ const initSocketIO = (httpServer) => {
     io.to("room0").emit("setRoom", simpleRoom);
   };
 
+  const updateUsers = () => {
+    // We update entire room
+    let users = getSimplifiedRoom().users;
+    io.to("room0").emit("setUsers", users);
+  };
+
   io.on("connect", (socket) => {
     let clientSocketID = socket.id;
 
@@ -28,7 +34,7 @@ const initSocketIO = (httpServer) => {
       room.users[clientSpotifyID].clientSocketID = clientSocketID;
 
       // We update entire room about new user
-      updateRoom();
+      updateUsers();
 
       // Send client their access token and start refresh token timeout
       setAccessTokenFromRefreshToken(clientSpotifyID, socket);
@@ -45,7 +51,7 @@ const initSocketIO = (httpServer) => {
       }
 
       // We update entire room about disconnect user
-      updateRoom();
+      updateUsers();
     });
 
     socket.on("addToQueue", ({ spotifyID, context_uri }) => {

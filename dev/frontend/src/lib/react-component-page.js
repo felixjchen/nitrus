@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { render } from "react-dom";
 import {
   Header,
   HeaderName,
@@ -14,6 +13,7 @@ import {
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
 import { SearchPane } from "./react-component-search";
+import ProfileImages from "./react-component-profile-images";
 import styles from "./react-component-page.css";
 import io from "socket.io-client";
 
@@ -21,6 +21,7 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
 const backendURL = "http://0.0.0.0";
 // const backendURL = "https://nitrus.azurewebsites.net";
+
 const socket = io(backendURL);
 socket.on("connect", () => {
   socket.emit("init", spotifyID);
@@ -41,42 +42,7 @@ const spotifyLogoutHandler = () => {
   window.location.replace("https://www.spotify.com/logout/");
 };
 
-const addToQueueHandler = (context_uri) => {
-  console.log({ spotifyID, context_uri });
-  socket.emit("addToQueue", { spotifyID, context_uri });
-};
-
 const Page = () => {
-  const [accessToken, setAccessToken] = useState("");
-  const [room, setRoom] = useState({ queue: [], users: {} });
-
-  useEffect(() => {
-    socket.on("setAccessToken", (accessToken) => {
-      setAccessToken(accessToken);
-    });
-    console.log("New accessToken", accessToken);
-    return () => {};
-  });
-
-  useEffect(() => {
-    socket.on("setRoom", (room) => {
-      setRoom(room);
-    });
-    console.log("New room", room);
-    return () => {};
-  });
-
-  const profileImages = [];
-  for (let userID in room.users) {
-    profileImages.push(
-      <img
-        key={`${userID}_profilePhoto`}
-        className="profilePhoto"
-        src={room.users[userID].profileImageURL}
-      ></img>
-    );
-  }
-
   return (
     <div id="page">
       <HeaderContainer
@@ -85,7 +51,9 @@ const Page = () => {
             <Header aria-label="Nitrus">
               <HeaderName prefix="">Nitrus</HeaderName>
               <HeaderNavigation aria-label="Nitrus">
-                {profileImages}
+                <>
+                  <ProfileImages socket={socket}></ProfileImages>
+                </>
               </HeaderNavigation>
               <HeaderGlobalBar>
                 <HeaderGlobalAction
@@ -100,19 +68,17 @@ const Page = () => {
             <Grid>
               <Row>
                 <Column id="DesktopQueue" sm={{ span: 0 }} md={2} lg={2}>
-                  <pre>{JSON.stringify({ room, accessToken }, null, 2)}</pre>
+                  {/* <pre>{JSON.stringify({ room, accessToken }, null, 2)}</pre> */}
                 </Column>
                 <Column sm={4} md={6} lg={10}>
-                  <SearchPane
-                    {...{ accessToken, addToQueueHandler }}
-                  ></SearchPane>
+                  <SearchPane socket={socket}></SearchPane>
                 </Column>
 
                 <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                   <SwipeableBottomSheet {...bottomSheetProps}>
                     <div id="MobileQueue">
                       <pre>
-                        {JSON.stringify({ room, accessToken }, null, 2)}
+                        {/* {JSON.stringify({ room, accessToken }, null, 2)} */}
                       </pre>
                     </div>
                   </SwipeableBottomSheet>

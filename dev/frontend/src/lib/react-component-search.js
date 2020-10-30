@@ -1,5 +1,4 @@
-import React from "react";
-// import { render } from "react-dom";
+import React, { useState, useEffect } from "react";
 import {
   DataTable,
   TableContainer,
@@ -84,7 +83,7 @@ class SearchResult extends React.Component {
               <OverflowMenuItem
                 itemText="Queue"
                 onClick={() => {
-                  this.props.addToQueueHandler(item.uri);
+                  // this.props.addToQueueHandler(item.uri);
                 }}
               ></OverflowMenuItem>
             </OverflowMenu>
@@ -126,55 +125,56 @@ class SearchResult extends React.Component {
   };
 }
 
-class SearchPane extends React.Component {
-  // https://medium.com/@selvaganesh93/how-to-clean-up-subscriptions-in-react-components-using-abortcontroller-72335f19b6f7
-  abortController = new AbortController();
-  constructor(props) {
-    super(props);
+const SearchPane = (props) => {
+  const socket = props.socket;
+  const abortController = new AbortController();
 
-    this.state = {
-      items: [],
+  const [accessToken, setAccessToken] = useState("");
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    socket.on("setAccessToken", (accessToken) => {
+      setAccessToken(accessToken);
+    });
+    console.log("New accessToken", accessToken);
+    return () => {
+      abortController.abort();
     };
-  }
+  });
 
-  componentWillUnmount() {
-    this.abortController.abort();
-  }
-
-  searchQueryOnChangeHandler = async (searchQuery) => {
-    let oldState = this.state;
-    let newItems = [];
+  const searchQueryOnChangeHandler = async (searchQuery) => {
     if (searchQuery) {
       let requestOptions = {
         method: "GET",
-        headers: { Authorization: `Bearer ${this.props.accessToken}` },
+        headers: { Authorization: `Bearer ${accessToken}` },
         redirect: "follow",
-        signal: this.abortController.signal,
+        signal: abortController.signal,
       };
-
       let response = await fetch(
         `https://api.spotify.com/v1/search?q=${searchQuery}&type=track`,
         requestOptions
       );
       let responseObj = JSON.parse(await response.text());
-      newItems = responseObj.tracks.items;
+      setItems(responseObj.tracks.items);
     }
-    let newState = { ...oldState, ...{ items: newItems } };
-    this.setState(newState);
   };
 
-  render = () => {
-    return (
-      <>
-        <MySearch
-          searchQueryOnChangeHandler={this.searchQueryOnChangeHandler}
-        ></MySearch>
-        <SearchResult
-          {...this.state}
-          addToQueueHandler={this.props.addToQueueHandler}
-        ></SearchResult>
-      </>
-    );
-  };
-}
+  // const addToQueueHandler = (context_uri) => {
+  //   console.log({ spotifyID, context_uri });
+  //   socket.emit("addToQueue", { spotifyID, context_uri });
+  // };
+
+  return (
+    <>
+      <MySearch
+        searchQueryOnChangeHandler={searchQueryOnChangeHandler}
+      ></MySearch>
+      <SearchResult
+        items={items}
+        // addToQueueHandler={props.addToQueueHandler}
+      ></SearchResult>
+    </>
+  );
+};
+
 export { SearchPane };
