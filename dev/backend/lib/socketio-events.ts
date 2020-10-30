@@ -8,12 +8,10 @@ import {
 const initSocketIO = (httpServer) => {
   const io = socketio(httpServer);
 
-  const updateRoom = () => {
-    // We update entire room
-    let simpleRoom = getSimplifiedRoom();
-    io.to("room0").emit("setRoom", simpleRoom);
+  const updateQueue = () => {
+    let queue = room.queue;
+    io.to("room0").emit("setQueue", queue);
   };
-
   const updateUsers = () => {
     // We update entire room
     let users = getSimplifiedRoom().users;
@@ -57,7 +55,7 @@ const initSocketIO = (httpServer) => {
     socket.on("addToQueue", ({ spotifyID, context_uri }) => {
       console.log({ spotifyID, context_uri });
 
-      updateRoom();
+      updateQueue();
     });
   });
 

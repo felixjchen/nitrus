@@ -83,7 +83,7 @@ class SearchResult extends React.Component {
               <OverflowMenuItem
                 itemText="Queue"
                 onClick={() => {
-                  // this.props.addToQueueHandler(item.uri);
+                  this.props.addToQueueHandler(item.uri);
                 }}
               ></OverflowMenuItem>
             </OverflowMenu>
@@ -126,7 +126,7 @@ class SearchResult extends React.Component {
 }
 
 const SearchPane = (props) => {
-  const socket = props.socket;
+  const { socket, spotifyID } = props;
   const abortController = new AbortController();
 
   const [accessToken, setAccessToken] = useState("");
@@ -159,10 +159,10 @@ const SearchPane = (props) => {
     }
   };
 
-  // const addToQueueHandler = (context_uri) => {
-  //   console.log({ spotifyID, context_uri });
-  //   socket.emit("addToQueue", { spotifyID, context_uri });
-  // };
+  const addToQueueHandler = (context_uri) => {
+    console.log({ spotifyID, context_uri });
+    socket.emit("addToQueue", { spotifyID, context_uri });
+  };
 
   return (
     <>
@@ -171,10 +171,10 @@ const SearchPane = (props) => {
       ></MySearch>
       <SearchResult
         items={items}
-        // addToQueueHandler={props.addToQueueHandler}
+        addToQueueHandler={addToQueueHandler}
       ></SearchResult>
     </>
   );
 };
 
-export { SearchPane };
+export default SearchPane;

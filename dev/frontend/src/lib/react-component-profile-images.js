@@ -3,7 +3,7 @@ import styles from "./react-component-profile-images.css";
 
 const ProfileImages = (props) => {
   const socket = props.socket;
-  const [users, setUsers] = useState(users);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     socket.on("setUsers", (users) => {
