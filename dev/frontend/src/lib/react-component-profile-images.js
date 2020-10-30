@@ -8,8 +8,8 @@ const ProfileImages = (props) => {
   useEffect(() => {
     socket.on("setUsers", (users) => {
       setUsers(users);
+      console.log("New users", users);
     });
-    console.log("New users", users);
     return () => {};
   });
 

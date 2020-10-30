@@ -135,12 +135,12 @@ const SearchPane = (props) => {
   useEffect(() => {
     socket.on("setAccessToken", (accessToken) => {
       setAccessToken(accessToken);
+      console.log("New accessToken", accessToken);
     });
-    console.log("New accessToken", accessToken);
     return () => {
       abortController.abort();
     };
-  });
+  }, [items]);
 
   const searchQueryOnChangeHandler = async (searchQuery) => {
     if (searchQuery) {
