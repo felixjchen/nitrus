@@ -53,17 +53,18 @@ const initSocketIO = (httpServer) => {
       updateUsers();
     });
 
-    socket.on("addTrackToQueue", ({ spotifyID, context_uri }) => {
-      console.log(`${spotifyID} has added ${context_uri} to queue`);
+    socket.on("addTrackToQueue", ({ spotifyID, track }) => {
+      console.log(`${spotifyID} has added ${track.name} to queue`);
 
       const queueTrack = {
-        context_uri,
+        track,
         votes: {
           spotifyID: 1,
         },
         priority: 1,
       };
       room.queue.push(queueTrack);
+
       updateQueue();
     });
   });

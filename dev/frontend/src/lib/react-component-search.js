@@ -59,71 +59,73 @@ class MySearch extends React.Component {
   };
 }
 
-class SearchResult extends React.Component {
-  render = () => {
-    const searchResultItems = this.props.items.map((item) => {
-      return (
-        <TableRow id={item.id} key={item.id}>
-          <TableCell key={`${item.id}:name`}>{item.name}</TableCell>
-          <TableCell key={`${item.id}:artist`}>
-            {item.artists[0].name}
-          </TableCell>
-          <TableCell key={`${item.id}:album`}>
-            {item.album.name}
-            <img
-              src={`${item.album.images[0].url}`}
-              className="albumPhoto"
-            ></img>
-          </TableCell>
-          <TableCell key={`${item.id}:duration`}>
-            {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
-          </TableCell>
-          <TableCell key="overflow">
-            <OverflowMenu flipped>
-              <OverflowMenuItem
-                itemText="Queue"
-                onClick={() => {
-                  this.props.addTrackToQueueHandler(item.uri);
-                }}
-              ></OverflowMenuItem>
-            </OverflowMenu>
-          </TableCell>
-        </TableRow>
-      );
-    });
+const SearchResult = (props) => {
+  let { items, queue } = props;
 
+  // We create hashmap of queue uris, so filtering songs not in queue is not O(nm) but rather O(n)
+  let queueURI = {};
+  if (queue.length > 0) {
+    queueURI = queue.reduce((map, i) => {
+      map[i.track.uri] = true;
+      return map;
+    }, {});
+  }
+  items = items.filter((i) => !(i.uri in queueURI));
+
+  const searchResultItems = items.map((item) => {
     return (
-      <DataTable {...searchResultProps}>
-        {({
-          rows,
-          headers,
-          getHeaderProps,
-          getRowProps,
-          getTableProps,
-          getTableContainerProps,
-        }) => (
-          <TableContainer {...getTableContainerProps()}>
-            <Table {...getTableProps()}>
-              <TableHead>
-                <TableRow>
-                  {headers.map((header) => (
-                    <TableHeader
-                      key={header.key}
-                      {...getHeaderProps({ header })}
-                    >
-                      {header.header}
-                    </TableHeader>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>{searchResultItems}</TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </DataTable>
+      <TableRow id={item.id} key={item.id}>
+        <TableCell key={`${item.id}:name`}>{item.name}</TableCell>
+        <TableCell key={`${item.id}:artist`}>{item.artists[0].name}</TableCell>
+        <TableCell key={`${item.id}:album`}>
+          {item.album.name}
+          <img src={`${item.album.images[0].url}`} className="albumPhoto"></img>
+        </TableCell>
+        <TableCell key={`${item.id}:duration`}>
+          {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
+        </TableCell>
+        <TableCell key="overflow">
+          <OverflowMenu flipped>
+            <OverflowMenuItem
+              itemText="Queue"
+              onClick={() => {
+                props.addTrackToQueueHandler(item);
+              }}
+            ></OverflowMenuItem>
+          </OverflowMenu>
+        </TableCell>
+      </TableRow>
     );
-  };
-}
+  });
+
+  return (
+    <DataTable {...searchResultProps}>
+      {({
+        rows,
+        headers,
+        getHeaderProps,
+        getRowProps,
+        getTableProps,
+        getTableContainerProps,
+      }) => (
+        <TableContainer {...getTableContainerProps()}>
+          <Table {...getTableProps()}>
+            <TableHead>
+              <TableRow>
+                {headers.map((header) => (
+                  <TableHeader key={header.key} {...getHeaderProps({ header })}>
+                    {header.header}
+                  </TableHeader>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>{searchResultItems}</TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </DataTable>
+  );
+};
 
 const SearchPane = (props) => {
   const { socket, spotifyID } = props;
@@ -168,8 +170,13 @@ const SearchPane = (props) => {
     setItems(newItems);
   };
 
-  const addTrackToQueueHandler = (context_uri) => {
-    socket.emit("addTrackToQueue", { spotifyID, context_uri });
+  const addTrackToQueueHandler = (track) => {
+    let { id, uri, name, album } = track;
+    if ("available_markets" in album) {
+      delete album.available_markets;
+    }
+    track = { id, uri, name, album };
+    socket.emit("addTrackToQueue", { spotifyID, track });
   };
 
   return (
