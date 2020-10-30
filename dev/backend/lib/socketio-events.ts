@@ -33,6 +33,7 @@ const initSocketIO = (httpServer) => {
 
       // We update entire room about new user
       updateUsers();
+      updateQueue();
 
       // Send client their access token and start refresh token timeout
       setAccessTokenFromRefreshToken(clientSpotifyID, socket);
@@ -52,9 +53,17 @@ const initSocketIO = (httpServer) => {
       updateUsers();
     });
 
-    socket.on("addToQueue", ({ spotifyID, context_uri }) => {
-      console.log({ spotifyID, context_uri });
+    socket.on("addTrackToQueue", ({ spotifyID, context_uri }) => {
+      console.log(`${spotifyID} has added ${context_uri} to queue`);
 
+      const queueTrack = {
+        context_uri,
+        votes: {
+          spotifyID: 1,
+        },
+        priority: 1,
+      };
+      room.queue.push(queueTrack);
       updateQueue();
     });
   });
