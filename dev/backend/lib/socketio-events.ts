@@ -8,12 +8,12 @@ import {
 const initSocketIO = (httpServer) => {
   const io = socketio(httpServer);
 
+  // We update entire room
   const updateQueue = () => {
     let queue = room.queue;
     io.to("room0").emit("setQueue", queue);
   };
   const updateUsers = () => {
-    // We update entire room
     let users = getSimplifiedRoom().users;
     io.to("room0").emit("setUsers", users);
   };
@@ -40,6 +40,7 @@ const initSocketIO = (httpServer) => {
     });
 
     socket.on("disconnect", () => {
+      //  MORE work here for queue
       for (let userID in room.users) {
         if (room.users[userID].clientSocketID == clientSocketID) {
           clearTimeout(room.users[userID].refreshTimeout);
