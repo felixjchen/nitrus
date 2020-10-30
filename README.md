@@ -30,7 +30,3 @@
 - https://socket.io/docs , Socketio
 - https://react.carbondesignsystem.com/?path=/story/* , React Carbon Design
 - https://github.com/manufont/react-swipeable-bottom-sheet, using this in mobile view to hide queue, but we can keep queue large vertically, which will be nice -->
-
-## bugs
-
-- new access token re renders all.
