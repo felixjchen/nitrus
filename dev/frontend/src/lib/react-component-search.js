@@ -143,6 +143,7 @@ const SearchPane = (props) => {
   }, [items]);
 
   const searchQueryOnChangeHandler = async (searchQuery) => {
+    let newItems = [];
     if (searchQuery) {
       let requestOptions = {
         method: "GET",
@@ -155,8 +156,9 @@ const SearchPane = (props) => {
         requestOptions
       );
       let responseObj = JSON.parse(await response.text());
-      setItems(responseObj.tracks.items);
+      newItems = responseObj.tracks.items;
     }
+    setItems(newItems);
   };
 
   const addToQueueHandler = (context_uri) => {
