@@ -47,6 +47,12 @@ const initSocketIO = (httpServer) => {
       // We update entire room about disconnect user
       updateRoom();
     });
+
+    socket.on("addToQueue", ({ spotifyID, context_uri }) => {
+      console.log({ spotifyID, context_uri });
+
+      updateRoom();
+    });
   });
 
   return io;

@@ -70,9 +70,7 @@ class Page extends React.Component {
                     <pre>{JSON.stringify(this.props, null, 2)}</pre>
                   </Column>
                   <Column sm={4} md={6} lg={10}>
-                    <SearchPane
-                      access_token={this.props.access_token}
-                    ></SearchPane>
+                    <SearchPane {...this.props}></SearchPane>
                   </Column>
 
                   <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>

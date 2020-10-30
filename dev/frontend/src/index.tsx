@@ -7,21 +7,28 @@ const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
 
 // https://www.npmjs.com/package/socket.io-client
-// const backendURL = "http://0.0.0.0";
-const backendURL = "https://nitrus.azurewebsites.net";
+const backendURL = "http://0.0.0.0";
+// const backendURL = "https://nitrus.azurewebsites.net";
+const socket = io(backendURL);
 
 let access_token: string = "";
 let room: object = { queue: [], users: {} };
-
-const socket = io(backendURL);
 ///////////////////////////////////////////////////////////////////////////////////////
-// Socket events
+// Helpers
 ///////////////////////////////////////////////////////////////////////////////////////
-let setPage = () => {
-  let page = <Page {...{ room, access_token }} />;
+const setPage = () => {
+  let page = <Page {...{ room, access_token, addToQueueHandler }} />;
   render(page, document.getElementById("root"));
 };
 
+const addToQueueHandler = (context_uri: string) => {
+  console.log({ spotifyID, context_uri });
+  socket.emit("addToQueue", { spotifyID, context_uri });
+};
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Socket events
+///////////////////////////////////////////////////////////////////////////////////////
 socket.on("connect", () => {
   socket.emit("init", spotifyID);
 });

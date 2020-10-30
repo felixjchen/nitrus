@@ -51,7 +51,7 @@ class MySearch extends React.Component {
         size={"lg"}
         labelText="search"
         onChange={() => {
-          this.props.searchQueryOnChange(
+          this.props.searchQueryOnChangeHandler(
             document.getElementById("search").value
           );
         }}
@@ -62,6 +62,9 @@ class MySearch extends React.Component {
 
 class SearchResult extends React.Component {
   render = () => {
+    {
+      console.log(this.props.items);
+    }
     const searchResultItems = this.props.items.map((item) => {
       return (
         <TableRow id={item.id} key={item.id}>
@@ -81,7 +84,12 @@ class SearchResult extends React.Component {
           </TableCell>
           <TableCell key="overflow">
             <OverflowMenu flipped>
-              <OverflowMenuItem itemText="Queue"></OverflowMenuItem>
+              <OverflowMenuItem
+                itemText="Queue"
+                onClick={() => {
+                  this.props.addToQueueHandler(item.uri);
+                }}
+              ></OverflowMenuItem>
             </OverflowMenu>
           </TableCell>
         </TableRow>
@@ -136,7 +144,7 @@ class SearchPane extends React.Component {
     this.abortController.abort();
   }
 
-  searchQueryOnChange = async (searchQuery) => {
+  searchQueryOnChangeHandler = async (searchQuery) => {
     let oldState = this.state;
     let newItems = [];
     if (searchQuery) {
@@ -161,8 +169,13 @@ class SearchPane extends React.Component {
   render = () => {
     return (
       <>
-        <MySearch searchQueryOnChange={this.searchQueryOnChange}></MySearch>
-        <SearchResult {...this.state}></SearchResult>
+        <MySearch
+          searchQueryOnChangeHandler={this.searchQueryOnChangeHandler}
+        ></MySearch>
+        <SearchResult
+          {...this.state}
+          addToQueueHandler={this.props.addToQueueHandler}
+        ></SearchResult>
       </>
     );
   };

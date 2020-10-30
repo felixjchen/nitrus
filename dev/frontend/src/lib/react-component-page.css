@@ -31,7 +31,8 @@ body {
 #MobileQueue {
   height: calc(100vh - 48px);
   background-color: #262626;
-  color: #f4f4f4;
+  /* color: #f4f4f4; */
+  color: orangered;
 }
 
 .bx--search {

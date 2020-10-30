@@ -8,7 +8,6 @@ RUN npm install
 ADD build ./build
 ADD lib ./lib
 ADD routes ./routes
-COPY global.ts .
 COPY index.ts .
 
 CMD ts-node index.ts
