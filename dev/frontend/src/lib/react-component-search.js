@@ -75,12 +75,12 @@ const SearchResult = (props) => {
   const searchResultItems = items.map((item) => {
     return (
       <TableRow id={item.id} key={item.id}>
-        <TableCell key={`${item.id}:name`}>{item.name}</TableCell>
-        <TableCell key={`${item.id}:artist`}>{item.artists[0].name}</TableCell>
-        <TableCell key={`${item.id}:album`}>
-          {item.album.name}
+        <TableCell key={`${item.id}:name`}>
           <img src={`${item.album.images[0].url}`} className="albumPhoto"></img>
+          {item.name}
         </TableCell>
+        <TableCell key={`${item.id}:artist`}>{item.artists[0].name}</TableCell>
+        <TableCell key={`${item.id}:album`}>{item.album.name}</TableCell>
         <TableCell key={`${item.id}:duration`}>
           {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
         </TableCell>
@@ -171,11 +171,11 @@ const SearchPane = (props) => {
   };
 
   const addTrackToQueueHandler = (track) => {
-    let { id, uri, name, album } = track;
+    let { id, uri, name, album, artists } = track;
     if ("available_markets" in album) {
       delete album.available_markets;
     }
-    track = { id, uri, name, album };
+    track = { id, uri, name, album, artists };
     socket.emit("addTrackToQueue", { spotifyID, track });
   };
 

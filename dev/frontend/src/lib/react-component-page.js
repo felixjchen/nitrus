@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import SearchPane from "./react-component-search";
+import ProfileImages from "./react-component-profile-images";
+import Debug from "./react-component-debug";
+import Queue from "./react-component-queue";
 import {
   Header,
   HeaderName,
@@ -12,16 +16,13 @@ import {
 } from "carbon-components-react";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
-import SearchPane from "./react-component-search";
-import ProfileImages from "./react-component-profile-images";
-import Debug from "./react-component-debug";
 import styles from "./react-component-page.css";
 import io from "socket.io-client";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
-// const backendURL = "http://0.0.0.0";
-const backendURL = "https://nitrus.azurewebsites.net";
+const backendURL = "http://0.0.0.0";
+// const backendURL = "https://nitrus.azurewebsites.net";
 
 const socket = io(backendURL);
 socket.on("connect", () => {
@@ -66,14 +67,13 @@ const Page = () => {
                 </HeaderGlobalAction>
               </HeaderGlobalBar>
             </Header>
-            <Grid>
+            <Grid condensed>
               <Row>
-                <Column
-                  id="DesktopQueue"
-                  sm={{ span: 0 }}
-                  md={2}
-                  lg={2}
-                ></Column>
+                <Column sm={{ span: 0 }} md={2} lg={2}>
+                  <div id="DesktopQueueWrapper">
+                    <Queue socket={socket}></Queue>
+                  </div>
+                </Column>
                 <Column sm={4} md={6} lg={10}>
                   <SearchPane
                     socket={socket}
@@ -83,11 +83,12 @@ const Page = () => {
 
                 <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                   <SwipeableBottomSheet {...bottomSheetProps}>
-                    <div id="MobileQueue"></div>
+                    <div id="MobileQueueWrapper"></div>
                   </SwipeableBottomSheet>
                 </Column>
               </Row>
 
+              {/* DEBUG */}
               <Row>
                 <>
                   <Column>
