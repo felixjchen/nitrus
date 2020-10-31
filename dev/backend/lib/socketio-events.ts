@@ -71,31 +71,31 @@ const initSocketIO = (httpServer) => {
       };
       queueTrack.votes[spotifyID] = 1;
       room.queue.push(queueTrack);
-
+      room.queue.sort((a, b) => b.priority - a.priority);
       updateQueue();
     });
 
     socket.on("voteTrack", ({ spotifyID, vote, trackID }) => {
-      let i = 0;
-      let found = false;
-      while (room.queue[i].track.id !== trackID) {
-        i++;
-        found = true;
+      for (let i = 0; i < room.queue.length; i++) {
+        let queueTrack = room.queue[i];
+        // if the vote is for this track.
+        if (queueTrack.track.id === trackID) {
+          queueTrack.votes[spotifyID] = vote;
+
+          // calculate new priority
+          let newPriority = 0;
+          for (let spotifyID in queueTrack.votes) {
+            newPriority += queueTrack.votes[spotifyID];
+          }
+          queueTrack.priority = newPriority;
+
+          // sort by highest prio first
+          room.queue.sort((a, b) => b.priority - a.priority);
+          console.log(room.queue);
+
+          updateQueue();
+        }
       }
-
-      // a user can spam downvote... entry dissapears and then array out of bounds when looking for it
-      if (!found) return;
-
-      let queueTrack = room.queue[i];
-      queueTrack.votes[spotifyID] = vote;
-      queueTrack.priority += vote;
-
-      if (queueTrack.priority === 0) delete room.queue[i];
-      room.queue.sort((a, b) => b.priority - a.priority);
-
-      console.log(room.queue);
-
-      updateQueue();
     });
   });
 

@@ -47,20 +47,30 @@ const QueueTrack = (props) => {
         <div>
           <ChevronSortUp32
             onClick={() => {
-              voteHandler(1, track.id);
+              // If already upvote, we remove vote, and its neutral
+              if (vote === 1) {
+                voteHandler(0, track.id);
+              } else {
+                voteHandler(1, track.id);
+              }
             }}
             className={vote === 1 ? "active" : ""}
           />
         </div>
         <div>{props.priority}</div>
-        <div>
+        {/* <div>
           <ChevronSortDown32
             onClick={() => {
-              voteHandler(-1, track.id);
+              // If already downvote, we remove vote, and its neutral
+              if (vote === -1) {
+                voteHandler(0, track.id);
+              } else {
+                voteHandler(-1, track.id);
+              }
             }}
             className={vote === -1 ? "active" : ""}
           />
-        </div>
+        </div> */}
       </Column>
     </Row>
   );
