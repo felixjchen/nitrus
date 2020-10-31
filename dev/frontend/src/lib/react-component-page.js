@@ -71,7 +71,7 @@ const Page = () => {
               <Row>
                 <Column sm={{ span: 0 }} md={2} lg={2}>
                   <div id="DesktopQueueWrapper">
-                    <Queue socket={socket}></Queue>
+                    <Queue socket={socket} spotifyID={spotifyID}></Queue>
                   </div>
                 </Column>
                 <Column sm={4} md={6} lg={10}>
@@ -84,7 +84,7 @@ const Page = () => {
                 <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                   <SwipeableBottomSheet {...bottomSheetProps}>
                     <div id="MobileQueueWrapper">
-                      <Queue socket={socket}></Queue>
+                      {/* <Queue socket={socket} spotifyID={spotifyID}></Queue> */}
                     </div>
                   </SwipeableBottomSheet>
                 </Column>

@@ -11,12 +11,18 @@
   flex-direction: column;
 }
 
-.queue-track-vote-col > div:nth-child(1) > svg {
-  fill: green;
+.queue-track-vote-col > div:nth-child(1) {
   margin-bottom: -1rem;
 }
 
-.queue-track-vote-col > div:nth-child(3) > svg {
-  fill: red;
+.queue-track-vote-col > div:nth-child(3) {
   margin-top: -0.7rem;
+}
+
+.queue-track-vote-col > div:nth-child(1) > svg[class*="active"] {
+  fill: lightgreen;
+}
+
+.queue-track-vote-col > div:nth-child(3) > svg[class*="active"] {
+  fill: orangered;
 }

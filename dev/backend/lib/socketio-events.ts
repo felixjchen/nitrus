@@ -59,11 +59,10 @@ const initSocketIO = (httpServer) => {
 
       const queueTrack = {
         track,
-        votes: {
-          spotifyID: 1,
-        },
+        votes: {},
         priority: 1,
       };
+      queueTrack.votes[spotifyID] = 1;
       room.queue.push(queueTrack);
 
       updateQueue();
