@@ -40,11 +40,18 @@ const initSocketIO = (httpServer) => {
     });
 
     socket.on("disconnect", () => {
-      //  MORE work here for queue
+      //  MORE work here for queue... we need to remove votes
+      let clientSpotifyID = "";
       for (let userID in room.users) {
-        if (room.users[userID].clientSocketID == clientSocketID) {
-          clearTimeout(room.users[userID].refreshTimeout);
-          console.log(room.users[userID].display_name, "has disconnected");
+        let user = room.users[userID];
+        if (user.clientSocketID == clientSocketID) {
+          clientSpotifyID = userID;
+          clearTimeout(user.refreshTimeout);
+          console.log(
+            user.display_name,
+            "has disconnected, with spotifyID",
+            clientSpotifyID
+          );
           delete room.users[userID];
           break;
         }
@@ -64,6 +71,29 @@ const initSocketIO = (httpServer) => {
       };
       queueTrack.votes[spotifyID] = 1;
       room.queue.push(queueTrack);
+
+      updateQueue();
+    });
+
+    socket.on("voteTrack", ({ spotifyID, vote, trackID }) => {
+      let i = 0;
+      let found = false;
+      while (room.queue[i].track.id !== trackID) {
+        i++;
+        found = true;
+      }
+
+      // a user can spam downvote... entry dissapears and then array out of bounds when looking for it
+      if (!found) return;
+
+      let queueTrack = room.queue[i];
+      queueTrack.votes[spotifyID] = vote;
+      queueTrack.priority += vote;
+
+      if (queueTrack.priority === 0) delete room.queue[i];
+      room.queue.sort((a, b) => b.priority - a.priority);
+
+      console.log(room.queue);
 
       updateQueue();
     });

@@ -1,5 +1,5 @@
 .queue-track {
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
   height: 3rem;
 }
 
@@ -11,18 +11,22 @@
   flex-direction: column;
 }
 
+.queue-track-vote-col > div > svg {
+  cursor: pointer;
+}
+
 .queue-track-vote-col > div:nth-child(1) {
   margin-bottom: -1rem;
 }
 
 .queue-track-vote-col > div:nth-child(3) {
-  margin-top: -0.7rem;
+  margin-top: -0.8rem;
 }
 
 .queue-track-vote-col > div:nth-child(1) > svg[class*="active"] {
-  fill: lightgreen;
+  fill: #24a148;
 }
 
 .queue-track-vote-col > div:nth-child(3) > svg[class*="active"] {
-  fill: orangered;
+  fill: #da1e28;
 }

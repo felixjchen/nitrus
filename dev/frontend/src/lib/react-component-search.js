@@ -171,11 +171,10 @@ const SearchPane = (props) => {
   };
 
   const addTrackToQueueHandler = (track) => {
-    let { id, uri, name, album, artists } = track;
-    if ("available_markets" in album) {
-      delete album.available_markets;
-    }
-    track = { id, uri, name, album, artists };
+    let { id, uri, name } = track;
+    let albumImageURL = track.album.images[0].url;
+    let artistName = track.artists[0].name;
+    track = { id, uri, name, albumImageURL, artistName };
     socket.emit("addTrackToQueue", { spotifyID, track });
   };
 

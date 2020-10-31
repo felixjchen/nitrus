@@ -15,11 +15,16 @@ const Queue = (props) => {
     return () => {};
   }, [queue]);
 
+  const voteHandler = (vote, trackID) => {
+    socket.emit("voteTrack", { spotifyID, vote, trackID });
+  };
+
   const QueueTracks = queue.map((i) => {
     return (
       <QueueTrack
         key={`QueueTrack${i.track.id}`}
         spotifyID={spotifyID}
+        voteHandler={voteHandler}
         {...i}
       ></QueueTrack>
     );
@@ -29,24 +34,32 @@ const Queue = (props) => {
 };
 
 const QueueTrack = (props) => {
-  const { spotifyID } = props;
+  const { spotifyID, voteHandler, track } = props;
   const vote = spotifyID in props.votes ? props.votes[spotifyID] : 0;
-  console.log(props, spotifyID, vote);
+
   return (
     <Row className="queue-track">
       <Column md={2}>
-        <img src={`${props.track.album.images[0].url}`}></img>
+        <img src={`${track.albumImageURL}`}></img>
       </Column>
-      <Column md={4}>
-        {props.track.name + " - " + props.track.artists[0].name}
-      </Column>
+      <Column md={4}>{track.name + " - " + track.artistName}</Column>
       <Column md={2} className="queue-track-vote-col">
         <div>
-          <ChevronSortUp32 className={vote === 1 ? "active" : ""} />
+          <ChevronSortUp32
+            onClick={() => {
+              voteHandler(1, track.id);
+            }}
+            className={vote === 1 ? "active" : ""}
+          />
         </div>
         <div>{props.priority}</div>
         <div>
-          <ChevronSortDown32 className={vote === -1 ? "active" : ""} />
+          <ChevronSortDown32
+            onClick={() => {
+              voteHandler(-1, track.id);
+            }}
+            className={vote === -1 ? "active" : ""}
+          />
         </div>
       </Column>
     </Row>
