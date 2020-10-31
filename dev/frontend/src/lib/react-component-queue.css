@@ -1,0 +1,22 @@
+.queue-track {
+  margin-bottom: 1.4rem;
+  height: 3rem;
+}
+
+.queue-track > div {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.queue-track-vote-col > div:nth-child(1) > svg {
+  fill: green;
+  margin-bottom: -1rem;
+}
+
+.queue-track-vote-col > div:nth-child(3) > svg {
+  fill: red;
+  margin-top: -0.7rem;
+}

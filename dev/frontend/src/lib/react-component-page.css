@@ -20,14 +20,12 @@ body {
   z-index: 0;
 }
 
-#DesktopQueueWrapper {
-  padding-left: 2rem;
-}
 #DesktopQueueWrapper,
 #MobileQueueWrapper {
   height: calc(100vh - 48px);
   background-color: #262626;
   color: #f4f4f4;
+  padding-left: 2rem;
 }
 
 .bx--search {
