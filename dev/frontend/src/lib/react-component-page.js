@@ -21,8 +21,8 @@ import io from "socket.io-client";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
-// const backendURL = "http://0.0.0.0";
-const backendURL = "https://nitrus.azurewebsites.net";
+const backendURL = "http://0.0.0.0";
+// const backendURL = "https://nitrus.azurewebsites.net";
 
 const socket = io(backendURL);
 socket.on("connect", () => {
@@ -45,6 +45,10 @@ const spotifyLogoutHandler = () => {
 };
 
 const Page = () => {
+  // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+
   return (
     <div id="page">
       <HeaderContainer
