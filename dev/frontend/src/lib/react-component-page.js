@@ -21,8 +21,8 @@ import io from "socket.io-client";
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
-const backendURL = "http://0.0.0.0";
-// const backendURL = "https://nitrus.azurewebsites.net";
+// const backendURL = "http://0.0.0.0";
+const backendURL = "https://nitrus.azurewebsites.net";
 
 const socket = io(backendURL);
 socket.on("connect", () => {
