@@ -28,7 +28,8 @@ body {
   padding-right: 0.4rem;
 }
 
-.bx--search {
-  margin: auto;
-  width: 80%;
+@media only screen and (max-width: 1056px) {
+  .bx--grid {
+    padding-right: calc(1rem - 1px);
+  }
 }

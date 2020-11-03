@@ -22,3 +22,12 @@
 .queue-track-vote-col > div:nth-child(1) > svg[class*="active"] {
   fill: #24a148;
 }
+
+@media only screen and (max-width: 672px) {
+  .bx--grid {
+    margin-top: 0px !important;
+  }
+  #MobileQueueWrapper {
+    /* background-color: red !important; */
+  }
+}
