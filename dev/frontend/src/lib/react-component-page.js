@@ -84,7 +84,7 @@ const Page = () => {
                 <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
                   <SwipeableBottomSheet {...bottomSheetProps}>
                     <div id="MobileQueueWrapper">
-                      {/* <Queue socket={socket} spotifyID={spotifyID}></Queue> */}
+                      <Queue socket={socket} spotifyID={spotifyID}></Queue>
                     </div>
                   </SwipeableBottomSheet>
                 </Column>

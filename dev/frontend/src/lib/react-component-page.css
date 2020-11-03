@@ -6,7 +6,7 @@ body {
 .bx--grid {
   max-width: none;
   padding: 0;
-  margin: 0;
+  padding-left: calc(1rem - 1px);
   margin-top: -1px;
 }
 
@@ -25,7 +25,6 @@ body {
   height: calc(100vh - 48px);
   background-color: #262626;
   color: #f4f4f4;
-  padding-left: 2rem;
   padding-right: 0.4rem;
 }
 

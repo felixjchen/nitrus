@@ -19,14 +19,6 @@
   margin-bottom: -1rem;
 }
 
-.queue-track-vote-col > div:nth-child(3) {
-  margin-top: -0.8rem;
-}
-
 .queue-track-vote-col > div:nth-child(1) > svg[class*="active"] {
   fill: #24a148;
-}
-
-.queue-track-vote-col > div:nth-child(3) > svg[class*="active"] {
-  fill: #da1e28;
 }

@@ -88,14 +88,15 @@ const initSocketIO = (httpServer) => {
             newPriority += queueTrack.votes[spotifyID];
           }
           queueTrack.priority = newPriority;
-
-          // sort by highest prio first
-          room.queue.sort((a, b) => b.priority - a.priority);
-          console.log(room.queue);
-
-          updateQueue();
         }
       }
+
+      // Remove all 0 votes
+      room.queue = room.queue.filter((i) => i.priority > 0);
+      // sort by highest prio first
+      room.queue.sort((a, b) => b.priority - a.priority);
+
+      updateQueue();
     });
   });
 

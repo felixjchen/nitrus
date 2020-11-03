@@ -58,19 +58,6 @@ const QueueTrack = (props) => {
           />
         </div>
         <div>{props.priority}</div>
-        {/* <div>
-          <ChevronSortDown32
-            onClick={() => {
-              // If already downvote, we remove vote, and its neutral
-              if (vote === -1) {
-                voteHandler(0, track.id);
-              } else {
-                voteHandler(-1, track.id);
-              }
-            }}
-            className={vote === -1 ? "active" : ""}
-          />
-        </div> */}
       </Column>
     </Row>
   );

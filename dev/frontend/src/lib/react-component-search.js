@@ -179,7 +179,7 @@ const SearchPane = (props) => {
   };
 
   return (
-    <>
+    <div id="SearchPane">
       <MySearch
         searchQueryOnChangeHandler={searchQueryOnChangeHandler}
       ></MySearch>
@@ -188,7 +188,7 @@ const SearchPane = (props) => {
         queue={queue}
         addTrackToQueueHandler={addTrackToQueueHandler}
       ></SearchResult>
-    </>
+    </div>
   );
 };
 
