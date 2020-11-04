@@ -31,7 +31,7 @@ const searchResultProps = {
     },
     {
       key: "duration",
-      header: "Duration",
+      header: "Duration (min)",
     },
     {
       key: "overflow",
@@ -83,9 +83,9 @@ const SearchResult = (props) => {
         <TableCell key={`${item.id}:artist`}>{item.artists[0].name}</TableCell>
         <TableCell key={`${item.id}:album`}>{item.album.name}</TableCell>
         <TableCell key={`${item.id}:duration`}>
-          {Math.round((item.duration_ms * 10) / 1000 / 60) / 10} minutes
+          {Math.round((item.duration_ms * 10) / 1000 / 60) / 10}
         </TableCell>
-        <TableCell key="overflow">
+        <TableCell key={`${item.id}:overflow`}>
           <OverflowMenu flipped>
             <OverflowMenuItem
               itemText="Queue"

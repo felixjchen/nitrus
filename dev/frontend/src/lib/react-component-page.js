@@ -44,11 +44,16 @@ const spotifyLogoutHandler = () => {
   window.location.replace("https://www.spotify.com/logout/");
 };
 
-const Page = () => {
+// https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+const vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty("--vh", `${vh}px`);
+window.addEventListener("resize", () => {
   // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty("--vh", `${vh}px`);
+});
 
+const Page = () => {
   return (
     <div id="page">
       <HeaderContainer
