@@ -1,16 +1,16 @@
-html,
+/* html,
 body {
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
-}
+} */
 
 .bx--grid {
   max-width: none;
   padding: 0;
-  padding-left: calc(1rem - 1px);
-  margin-top: -1px;
 }
-
+.bx--row {
+  margin: 0 !important;
+}
 .bx--row > div {
   padding: 0 !important;
 }

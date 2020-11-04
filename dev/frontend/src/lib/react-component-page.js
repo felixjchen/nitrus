@@ -33,7 +33,7 @@ socket.on("redirectToLogin", () => {
 });
 
 const bottomSheetProps = {
-  overflowHeight: 48,
+  overflowHeight: 52,
   shadowTip: false,
   topShadow: false,
   overlay: false,
@@ -97,9 +97,7 @@ const Page = () => {
               {/* DEBUG */}
               <Row>
                 <>
-                  <Column>
-                    <Debug socket={socket}></Debug>
-                  </Column>
+                  <Column>{/* <Debug socket={socket}></Debug> */}</Column>
                 </>
               </Row>
             </Grid>

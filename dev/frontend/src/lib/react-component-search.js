@@ -14,6 +14,7 @@ import {
 } from "carbon-components-react";
 import styles from "./react-component-search.css";
 const searchResultProps = {
+  useZebraStyles: true,
   rows: [],
   headers: [
     {

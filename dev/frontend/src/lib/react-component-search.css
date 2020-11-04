@@ -5,15 +5,13 @@
 
 .bx--search {
   margin: 0 !important;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .bx--data-table-container {
   padding: 0;
-}
-
-@media (min-width: 66rem) {
-  .bx--col-lg-10 {
-    max-width: 82.6%;
-  }
+  /* header 48px, search bar 40px */
+  height: calc(100vh - 48px - 40px);
+  height: calc(var(--vh, 1vh) * 100 - 48px - 40px);
+  overflow-y: auto;
 }
