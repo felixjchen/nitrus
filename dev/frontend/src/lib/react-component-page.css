@@ -11,6 +11,10 @@ body {
   margin-top: -1px;
 }
 
+.bx--row > div {
+  padding: 0 !important;
+}
+
 .bx--header {
   position: static;
 }
@@ -24,7 +28,7 @@ body {
 #DesktopQueueWrapper,
 #MobileQueueWrapper {
   height: calc(100vh - 48px);
-  height: calc(var(--vh, 1vh) - 48px);
+  height: calc(var(--vh, 1vh) * 100 - 48px);
   background-color: #262626;
   color: #f4f4f4;
   padding-right: 0.4rem;

@@ -8,6 +8,10 @@
   width: 100% !important;
 }
 
+.bx--data-table-container {
+  padding: 0;
+}
+
 @media (min-width: 66rem) {
   .bx--col-lg-10 {
     max-width: 82.6%;

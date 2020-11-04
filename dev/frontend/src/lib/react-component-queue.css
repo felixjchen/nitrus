@@ -1,6 +1,17 @@
+#Queue {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 .queue-track {
+  display: flex;
+  flex-flow: row nowrap;
   margin-bottom: 1.6rem;
   height: 3rem;
+}
+
+.queue-track > div:last-child {
+  margin-left: auto;
 }
 
 .queue-track > div {

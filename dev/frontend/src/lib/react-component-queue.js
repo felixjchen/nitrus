@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Row, Column } from "carbon-components-react";
+import { Grid, Row, div } from "carbon-components-react";
 import styles from "./react-component-queue.css";
 import { ChevronSortDown32, ChevronSortUp32 } from "@carbon/icons-react";
 
@@ -30,7 +30,7 @@ const Queue = (props) => {
     );
   });
 
-  return <Grid>{QueueTracks}</Grid>;
+  return <div id="Queue">{QueueTracks}</div>;
 };
 
 const QueueTrack = (props) => {
@@ -38,12 +38,12 @@ const QueueTrack = (props) => {
   const vote = spotifyID in props.votes ? props.votes[spotifyID] : 0;
 
   return (
-    <Row className="queue-track">
-      <Column md={2}>
+    <div className="queue-track">
+      <div md={2}>
         <img src={`${track.albumImageURL}`}></img>
-      </Column>
-      <Column md={4}>{track.name + " - " + track.artistName}</Column>
-      <Column md={2} className="queue-track-vote-col">
+      </div>
+      <div md={4}>{track.name + " - " + track.artistName}</div>
+      <div md={2} className="queue-track-vote-col">
         <div>
           <ChevronSortUp32
             onClick={() => {
@@ -58,8 +58,8 @@ const QueueTrack = (props) => {
           />
         </div>
         <div>{props.priority}</div>
-      </Column>
-    </Row>
+      </div>
+    </div>
   );
 };
 
