@@ -20,6 +20,8 @@
 
 ### TODO
 
+- sortable table
+- queue sends user's ties to the top
 <!-- ## onboarding
 
 

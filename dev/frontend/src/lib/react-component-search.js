@@ -11,27 +11,21 @@ import {
   Search,
   OverflowMenu,
   OverflowMenuItem,
+  Button,
 } from "carbon-components-react";
 import styles from "./react-component-search.css";
+import { Add16 } from "@carbon/icons-react";
 const searchResultProps = {
   useZebraStyles: true,
   rows: [],
   headers: [
     {
-      key: "name",
-      header: "Name",
+      key: "image",
+      header: "Song",
     },
     {
-      key: "artist",
-      header: "Artist",
-    },
-    {
-      key: "album",
-      header: "Album",
-    },
-    {
-      key: "duration",
-      header: "Duration (min)",
+      key: "desc",
+      header: "",
     },
     {
       key: "overflow",
@@ -76,24 +70,32 @@ const SearchResult = (props) => {
   const searchResultItems = items.map((item) => {
     return (
       <TableRow id={item.id} key={item.id}>
-        <TableCell key={`${item.id}:name`}>
+        <TableCell key={`${item.id}:image`}>
           <img src={`${item.album.images[0].url}`} className="albumPhoto"></img>
-          {item.name}
         </TableCell>
-        <TableCell key={`${item.id}:artist`}>{item.artists[0].name}</TableCell>
-        <TableCell key={`${item.id}:album`}>{item.album.name}</TableCell>
-        <TableCell key={`${item.id}:duration`}>
-          {Math.round((item.duration_ms * 10) / 1000 / 60) / 10}
+        <TableCell key={`${item.id}:desc`}>
+          {item.name} - {item.artists[0].name}
         </TableCell>
         <TableCell key={`${item.id}:overflow`}>
-          <OverflowMenu flipped>
+          <Button
+            className="addToQueueButton"
+            renderIcon={Add16}
+            iconDescription="Add to queue"
+            kind="secondary"
+            hasIconOnly
+            size="small"
+            onClick={() => {
+              props.addTrackToQueueHandler(item);
+            }}
+          />
+          {/* <OverflowMenu flipped>
             <OverflowMenuItem
               itemText="Queue"
               onClick={() => {
                 props.addTrackToQueueHandler(item);
               }}
             ></OverflowMenuItem>
-          </OverflowMenu>
+          </OverflowMenu> */}
         </TableCell>
       </TableRow>
     );
@@ -111,15 +113,6 @@ const SearchResult = (props) => {
       }) => (
         <TableContainer {...getTableContainerProps()}>
           <Table {...getTableProps()}>
-            <TableHead>
-              <TableRow>
-                {headers.map((header) => (
-                  <TableHeader key={header.key} {...getHeaderProps({ header })}>
-                    {header.header}
-                  </TableHeader>
-                ))}
-              </TableRow>
-            </TableHead>
             <TableBody>{searchResultItems}</TableBody>
           </Table>
         </TableContainer>
