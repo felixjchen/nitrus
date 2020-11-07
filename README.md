@@ -18,6 +18,10 @@
 - https://medium.com/@rossbulat/react-hooks-managing-web-sockets-with-useeffect-and-usestate-2dfc30eeceec
 - https://www.valentinog.com/blog/socket-react/#socketio-react-and-nodejs-implementing-the-react-client
 
+### React swippeable bottom queue
+
+- https://github.com/manufont/react-swipeable-bottom-sheet,
+
 ### TODO
 
 - sortable table

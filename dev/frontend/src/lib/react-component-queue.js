@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Row, div } from "carbon-components-react";
 import styles from "./react-component-queue.css";
 import { ChevronSortDown32, ChevronSortUp32 } from "@carbon/icons-react";
 

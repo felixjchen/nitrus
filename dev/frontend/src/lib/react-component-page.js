@@ -3,6 +3,7 @@ import SearchPane from "./react-component-search";
 import ProfileImages from "./react-component-profile-images";
 import Debug from "./react-component-debug";
 import Queue from "./react-component-queue";
+import MobileQueue from "./react-component-mobile-queue";
 import {
   Header,
   HeaderName,
@@ -14,7 +15,6 @@ import {
   Row,
   Column,
 } from "carbon-components-react";
-import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 import { Logout20 } from "@carbon/icons-react";
 import styles from "./react-component-page.css";
 import io from "socket.io-client";
@@ -32,28 +32,13 @@ socket.on("redirectToLogin", () => {
   window.location.replace(`${backendURL}/login`);
 });
 
-const bottomSheetProps = {
-  overflowHeight: 52,
-  shadowTip: false,
-  topShadow: false,
-  overlay: false,
-  scrollTopAtClose: true,
-};
-
 const spotifyLogoutHandler = () => {
   window.location.replace("https://www.spotify.com/logout/");
 };
 
-// https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-const vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty("--vh", `${vh}px`);
-window.addEventListener("resize", () => {
-  // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty("--vh", `${vh}px`);
-});
-
 const Page = () => {
+  const [mobileQueueOpen, setMobileQueueOpen] = useState(false);
+
   return (
     <div id="page">
       <HeaderContainer
@@ -91,11 +76,10 @@ const Page = () => {
                 </Column>
 
                 <Column sm={1} md={{ span: 0 }} lg={{ span: 0 }}>
-                  <SwipeableBottomSheet {...bottomSheetProps}>
-                    <div id="MobileQueueWrapper">
-                      <Queue socket={socket} spotifyID={spotifyID}></Queue>
-                    </div>
-                  </SwipeableBottomSheet>
+                  <MobileQueue
+                    socket={socket}
+                    spotifyID={spotifyID}
+                  ></MobileQueue>
                 </Column>
               </Row>
 
