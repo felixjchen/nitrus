@@ -3,7 +3,9 @@ body {
   height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 } */
-
+.bx--header {
+  border-bottom: 0 !important;
+}
 .bx--grid {
   max-width: none;
   padding: 0;
@@ -31,7 +33,7 @@ body {
   height: calc(var(--vh, 1vh) * 100 - 48px);
   background-color: #262626;
   color: #f4f4f4;
-  padding-right: 0.4rem;
+  padding-right: 0.2rem;
 }
 
 @media only screen and (max-width: 1056px) {
@@ -45,12 +47,13 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f4f4f4;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #525252;
+  border-radius: 1px;
 }
 
 /* Handle on hover */

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styles from "./react-component-queue.css";
 import Queue from "./react-component-queue";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 
@@ -18,7 +17,6 @@ const MobileQueue = (props) => {
   return (
     <div
       onClick={() => {
-        console.log(open);
         setOpen(!open);
       }}
     >
