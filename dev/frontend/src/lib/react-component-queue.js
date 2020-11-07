@@ -42,19 +42,22 @@ const QueueTrack = (props) => {
         <img src={`${track.albumImageURL}`}></img>
       </div>
       <div md={4}>{track.name + " - " + track.artistName}</div>
-      <div md={2} className="queue-track-vote-col">
+      <div
+        md={2}
+        className="queue-track-vote-col"
+        onClick={(e) => {
+          // If already upvote, we remove vote, and its neutral
+          if (vote === 1) {
+            voteHandler(0, track.id);
+          } else {
+            voteHandler(1, track.id);
+          }
+
+          e.stopPropagation();
+        }}
+      >
         <div>
-          <ChevronSortUp32
-            onClick={() => {
-              // If already upvote, we remove vote, and its neutral
-              if (vote === 1) {
-                voteHandler(0, track.id);
-              } else {
-                voteHandler(1, track.id);
-              }
-            }}
-            className={vote === 1 ? "active" : ""}
-          />
+          <ChevronSortUp32 className={vote === 1 ? "active" : ""} />
         </div>
         <div>{props.priority}</div>
       </div>

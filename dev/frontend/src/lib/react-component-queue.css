@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 
-.queue-track-vote-col > div > svg {
+.queue-track-vote-col {
   cursor: pointer;
 }
 
