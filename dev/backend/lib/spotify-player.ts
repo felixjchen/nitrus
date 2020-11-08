@@ -51,9 +51,3 @@ const roomStart = (room, position_ms) => {
 };
 
 export { playerStart, playerPause, roomStart };
-
-var my_token = "BQBNXQS6nIdEDvig1g5sbT0ASuYV23h_MegCxIm4Gik-yFb43Lwk-n_PYr3U7QsEFhG-LXM8YR9bAFiDy7GbzB5Sxwg0Q6Wc41YpWVxGalKU8v_ZMlHtYmXGi_n7071isLfHBSwB_-0NL8vBgtc2RnZU"
-var uri = "spotify:track:0RC8s8nCsiSmONOLSB78AP"
-
-playerStart(my_token, uri, 0);
-setTimeout(() => {  playerPause(my_token); }, 5000);
