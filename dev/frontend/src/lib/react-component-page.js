@@ -86,7 +86,9 @@ const Page = () => {
               {/* DEBUG */}
               <Row>
                 <>
-                  <Column>{/* <Debug socket={socket}></Debug> */}</Column>
+                  <Column>
+                    <Debug socket={socket}></Debug>
+                  </Column>
                 </>
               </Row>
             </Grid>
