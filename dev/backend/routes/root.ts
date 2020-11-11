@@ -21,7 +21,8 @@ rootRouter.get("/", async (req, res) => {
 rootRouter.get("/login", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
-    let scopes = "user-read-email user-modify-playback-state";
+    let scopes =
+      "user-read-email user-read-playback-state user-modify-playback-state";
     res.redirect(
       "https://accounts.spotify.com/authorize" +
         "?response_type=code" +

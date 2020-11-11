@@ -5,6 +5,8 @@ import {
   setAccessTokenFromRefreshToken,
 } from "./socketio-helpers";
 
+import { roomStart } from "./spotify-player";
+
 const initSocketIO = (httpServer) => {
   const io = socketio(httpServer);
 
@@ -72,6 +74,9 @@ const initSocketIO = (httpServer) => {
       queueTrack.votes[spotifyID] = 1;
       room.queue.push(queueTrack);
       room.queue.sort((a, b) => b.priority - a.priority);
+
+      roomStart(room, track.uri, 0);
+
       updateQueue();
     });
 
