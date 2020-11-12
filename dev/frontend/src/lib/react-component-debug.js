@@ -6,24 +6,29 @@ const Debug = (props) => {
   const [users, setUsers] = useState([]);
   const [queue, setQueue] = useState([]);
   const [accessToken, setAccessToken] = useState("");
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
   useEffect(() => {
     socket.on("setUsers", (users) => {
       setUsers(users);
-      console.log("New users", users);
     });
     socket.on("setQueue", (queue) => {
       setQueue(queue);
-      console.log("New queue", queue);
     });
     socket.on("setAccessToken", (accessToken) => {
       setAccessToken(accessToken);
-      console.log("New accessToken", accessToken);
+    });
+    socket.on("setCurrentlyPlaying", (currentlyPlaying) => {
+      setCurrentlyPlaying(currentlyPlaying);
     });
     return () => {};
   });
 
-  return <pre>{JSON.stringify({ users, queue, accessToken }, null, 2)} </pre>;
+  return (
+    <pre>
+      {JSON.stringify({ accessToken, currentlyPlaying, queue, users }, null, 2)}{" "}
+    </pre>
+  );
 };
 
 export default Debug;

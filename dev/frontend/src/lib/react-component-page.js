@@ -37,8 +37,6 @@ const spotifyLogoutHandler = () => {
 };
 
 const Page = () => {
-  const [mobileQueueOpen, setMobileQueueOpen] = useState(false);
-
   return (
     <div id="page">
       <HeaderContainer
@@ -84,13 +82,13 @@ const Page = () => {
               </Row>
 
               {/* DEBUG */}
-              <Row>
+              {/* <Row>
                 <>
                   <Column>
                     <Debug socket={socket}></Debug>
                   </Column>
                 </>
-              </Row>
+              </Row> */}
             </Grid>
           </>
         )}

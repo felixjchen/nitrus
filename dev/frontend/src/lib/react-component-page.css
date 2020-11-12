@@ -33,7 +33,6 @@ body {
   height: calc(var(--vh, 1vh) * 100 - 48px);
   background-color: #262626;
   color: #f4f4f4;
-  padding-right: 0.2rem;
 }
 
 @media only screen and (max-width: 1056px) {

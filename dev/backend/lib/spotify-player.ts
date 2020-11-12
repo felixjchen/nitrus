@@ -1,4 +1,5 @@
 import * as fetch from "node-fetch";
+import { room } from "./global";
 
 //https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
 
@@ -19,8 +20,9 @@ const getDevices = async (access_token) => {
   return responseJSON.devices;
 };
 
-// for user with access_token, play track with track_uri, starting at position_ms
-const playerStart = async (access_token, track_uri, position_ms) => {
+// for user with spotifyID, play track with track_uri, starting at position_ms
+const playerStart = async (spotifyID, track_uri, position_ms) => {
+  let { access_token } = room.users[spotifyID];
   let myHeaders = {
     Authorization: "Bearer " + access_token,
     "Content-Type": "application/json",
@@ -40,10 +42,11 @@ const playerStart = async (access_token, track_uri, position_ms) => {
   };
 
   let devices = await getDevices(access_token);
-  if (devices) {
+  if (devices.length > 0) {
     let device_id = devices[0].id;
 
-    let response = await fetch(
+    // Queue on first device
+    fetch(
       `https://api.spotify.com/v1/me/player/play?device_id=${device_id}`,
       requestOptions
     );
@@ -54,9 +57,10 @@ const playerStart = async (access_token, track_uri, position_ms) => {
   }
 };
 
-// for user with access_token, pause player
-const playerPause = (access_token) => {
+// for user with spotifyID, pause player
+const playerPause = (spotifyID) => {
   // https://developer.spotify.com/documentation/web-api/reference/player/pause-a-users-playback/
+  let { access_token } = room.users[spotifyID];
   let myHeaders = { Authorization: "Bearer " + access_token };
 
   let requestOptions = {
@@ -65,26 +69,16 @@ const playerPause = (access_token) => {
     redirect: "follow",
   };
 
-  fetch("https://api.spotify.com/v1/me/player/pause", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+  fetch("https://api.spotify.com/v1/me/player/pause", requestOptions);
 };
 
 // for each user in room, play track with track_uri, starting at position_ms
-const roomStart = (room, track_uri, position_ms) => {
+const roomStart = (track_uri, position_ms) => {
   //https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
   let users = room.users;
-  for (let k in users) {
-    let { access_token } = users[k];
-    playerStart(access_token, track_uri, position_ms);
+  for (let spotifyID in users) {
+    playerStart(spotifyID, track_uri, position_ms);
   }
 };
 
 export { playerStart, playerPause, roomStart };
-
-// playerStart(
-//   "BQB_swOfcX4Kee0zxkVaVu5DWKqpKouQvAOW2faXzjrBa7e4zNua-B99kBKYzsXGlW3YJ8jyrjOKirEX79IYjvC75ixazS1yLFXQ1Ebg_i2-RgfFOTrm5MQhDwUJCkhwIguC3qvO2T7FGjTFaPacaK1a9kr0YABPysV9WVwGsA",
-//   "spotify:track:1DMEzmAoQIikcL52psptQL",
-//   0
-// );

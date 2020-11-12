@@ -3,14 +3,14 @@ import {
   DataTable,
   TableContainer,
   Table,
-  TableHead,
+  // TableHead,
+  // TableHeader,
   TableRow,
-  TableHeader,
   TableBody,
   TableCell,
   Search,
-  OverflowMenu,
-  OverflowMenuItem,
+  // OverflowMenu,
+  // OverflowMenuItem,
   Button,
 } from "carbon-components-react";
 import styles from "./react-component-search.css";
@@ -165,10 +165,11 @@ const SearchPane = (props) => {
   };
 
   const addTrackToQueueHandler = (track) => {
-    let { id, uri, name } = track;
+    let { id, uri, name, duration_ms } = track;
+    console.log(track);
     let albumImageURL = track.album.images[0].url;
     let artistName = track.artists[0].name;
-    track = { id, uri, name, albumImageURL, artistName };
+    track = { id, uri, name, albumImageURL, artistName, duration_ms };
     socket.emit("addTrackToQueue", { spotifyID, track });
   };
 

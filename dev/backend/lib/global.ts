@@ -14,7 +14,7 @@ if (production) {
     require("../secrets.json") || undefined);
 }
 
-let room = { queue: [], users: {} };
+let room = { queue: [], users: {}, currently_playing: null };
 
 export {
   production,

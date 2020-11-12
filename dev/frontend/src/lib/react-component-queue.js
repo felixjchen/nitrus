@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styles from "./react-component-queue.css";
-import { ChevronSortDown32, ChevronSortUp32 } from "@carbon/icons-react";
+import {
+  // ChevronSortDown32,
+  ChevronSortUp32,
+} from "@carbon/icons-react";
 
 const Queue = (props) => {
   const { spotifyID, socket } = props;
   const [queue, setQueue] = useState([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
   useEffect(() => {
     socket.on("setQueue", (queue) => {
       setQueue(queue);
-      console.log("New queue", queue);
+    });
+    socket.on("setCurrentlyPlaying", (currentlyPlaying) => {
+      setCurrentlyPlaying(currentlyPlaying);
     });
     return () => {};
   }, [queue]);
@@ -29,7 +35,33 @@ const Queue = (props) => {
     );
   });
 
-  return <div id="Queue">{QueueTracks}</div>;
+  return (
+    <div id="Queue">
+      {[
+        <CurrentlyPlayingTrack
+          track={currentlyPlaying}
+        ></CurrentlyPlayingTrack>,
+        ...QueueTracks,
+      ]}
+    </div>
+  );
+};
+
+const CurrentlyPlayingTrack = (props) => {
+  const { track } = props;
+
+  if (track) {
+    return (
+      <div className="currently-playing">
+        <div>
+          <img src={`${track.albumImageURL}`}></img>
+        </div>
+        <div>{track.name + " - " + track.artistName}</div>
+      </div>
+    );
+  } else {
+    return <div className="queue-track"></div>;
+  }
 };
 
 const QueueTrack = (props) => {
@@ -38,12 +70,11 @@ const QueueTrack = (props) => {
 
   return (
     <div className="queue-track">
-      <div md={2}>
+      <div>
         <img src={`${track.albumImageURL}`}></img>
       </div>
-      <div md={4}>{track.name + " - " + track.artistName}</div>
+      <div>{track.name + " - " + track.artistName}</div>
       <div
-        md={2}
         className="queue-track-vote-col"
         onClick={(e) => {
           // If already upvote, we remove vote, and its neutral

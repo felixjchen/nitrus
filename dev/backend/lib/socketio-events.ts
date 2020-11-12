@@ -2,22 +2,24 @@ import * as socketio from "socket.io";
 import { room } from "./global";
 import {
   getSimplifiedRoom,
-  setAccessTokenFromRefreshToken,
+  refreshTimeout,
+  playTimeout,
 } from "./socketio-helpers";
-
-import { roomStart } from "./spotify-player";
 
 const initSocketIO = (httpServer) => {
   const io = socketio(httpServer);
 
-  // We update entire room
-  const updateQueue = () => {
-    let queue = room.queue;
-    io.to("room0").emit("setQueue", queue);
-  };
   const updateUsers = () => {
-    let users = getSimplifiedRoom().users;
+    let { users } = getSimplifiedRoom();
     io.to("room0").emit("setUsers", users);
+  };
+  const updateCurrentlyPlaying = () => {
+    let { currently_playing } = room;
+    io.to("room0").emit("setCurrentlyPlaying", currently_playing);
+  };
+  const updateQueue = () => {
+    let { queue } = room;
+    io.to("room0").emit("setQueue", queue);
   };
 
   io.on("connect", (socket) => {
@@ -35,32 +37,13 @@ const initSocketIO = (httpServer) => {
 
       // We update entire room about new user
       updateUsers();
+
+      // These two can be sent to new user only
       updateQueue();
+      updateCurrentlyPlaying();
 
       // Send client their access token and start refresh token timeout
-      setAccessTokenFromRefreshToken(clientSpotifyID, socket);
-    });
-
-    socket.on("disconnect", () => {
-      //  MORE work here for queue... we need to remove votes
-      let clientSpotifyID = "";
-      for (let userID in room.users) {
-        let user = room.users[userID];
-        if (user.clientSocketID == clientSocketID) {
-          clientSpotifyID = userID;
-          clearTimeout(user.refreshTimeout);
-          console.log(
-            user.display_name,
-            "has disconnected, with spotifyID",
-            clientSpotifyID
-          );
-          delete room.users[userID];
-          break;
-        }
-      }
-
-      // We update entire room about disconnect user
-      updateUsers();
+      refreshTimeout(clientSpotifyID, socket);
     });
 
     socket.on("addTrackToQueue", ({ spotifyID, track }) => {
@@ -72,11 +55,16 @@ const initSocketIO = (httpServer) => {
         priority: 1,
       };
       queueTrack.votes[spotifyID] = 1;
+      //  Add track to queue and sort by prio
       room.queue.push(queueTrack);
       room.queue.sort((a, b) => b.priority - a.priority);
 
-      roomStart(room, track.uri, 0);
+      // If nothing is playing.. play
+      if (room.currently_playing === null) {
+        playTimeout(updateCurrentlyPlaying, updateQueue);
+      }
 
+      // Update all clients with current queue
       updateQueue();
     });
 
@@ -102,6 +90,28 @@ const initSocketIO = (httpServer) => {
       room.queue.sort((a, b) => b.priority - a.priority);
 
       updateQueue();
+    });
+
+    socket.on("disconnect", () => {
+      //  MORE work here for queue... we need to remove votes
+      let clientSpotifyID = "";
+      for (let userID in room.users) {
+        let user = room.users[userID];
+        if (user.clientSocketID == clientSocketID) {
+          clientSpotifyID = userID;
+          clearTimeout(user.refreshTimeout);
+          console.log(
+            user.display_name,
+            "has disconnected, with spotifyID",
+            clientSpotifyID
+          );
+          delete room.users[userID];
+          break;
+        }
+      }
+
+      // We update entire room about disconnect user
+      updateUsers();
     });
   });
 
