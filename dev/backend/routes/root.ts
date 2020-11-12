@@ -14,10 +14,6 @@ import {
 
 const rootRouter = express.Router();
 
-rootRouter.get("/", async (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/../build/index.html`));
-});
-
 rootRouter.get("/login", async (req, res) => {
   if (req.query.code == null) {
     // Authenticate
@@ -59,6 +55,10 @@ rootRouter.get("/login", async (req, res) => {
       }
     }
   }
+});
+
+rootRouter.get("/", async (req, res) => {
+  res.sendFile(path.resolve(`${__dirname}/../build/index.html`));
 });
 
 export { rootRouter };

@@ -1,27 +1,24 @@
-import * as socketio from "socket.io";
-import { room } from "./global";
+import { room, io } from "./global";
 import {
   getSimplifiedRoom,
   refreshTimeout,
   playTimeout,
 } from "./socketio-helpers";
 
-const initSocketIO = (httpServer) => {
-  const io = socketio(httpServer);
+const updateUsers = () => {
+  let { users } = getSimplifiedRoom();
+  io.to("room0").emit("setUsers", users);
+};
+const updateCurrentlyPlaying = () => {
+  let { currently_playing } = room;
+  io.to("room0").emit("setCurrentlyPlaying", currently_playing);
+};
+const updateQueue = () => {
+  let { queue } = room;
+  io.to("room0").emit("setQueue", queue);
+};
 
-  const updateUsers = () => {
-    let { users } = getSimplifiedRoom();
-    io.to("room0").emit("setUsers", users);
-  };
-  const updateCurrentlyPlaying = () => {
-    let { currently_playing } = room;
-    io.to("room0").emit("setCurrentlyPlaying", currently_playing);
-  };
-  const updateQueue = () => {
-    let { queue } = room;
-    io.to("room0").emit("setQueue", queue);
-  };
-
+const createSocketIOEvents = () => {
   io.on("connect", (socket) => {
     let clientSocketID = socket.id;
 
@@ -114,8 +111,6 @@ const initSocketIO = (httpServer) => {
       updateUsers();
     });
   });
-
-  return io;
 };
 
-export { initSocketIO };
+export { createSocketIOEvents };
