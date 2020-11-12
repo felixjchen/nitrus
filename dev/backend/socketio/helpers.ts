@@ -1,7 +1,7 @@
 import * as socketio from "socket.io";
-import { room } from "./global";
-import { getAccess } from "./spotify-authorization";
-import { roomStart } from "./spotify-player";
+import { room } from "../global";
+import { getAccess } from "../spotify/authorization";
+import { roomStart } from "../spotify/player";
 
 const simplifiedRoomKeys = [
   "display_name",

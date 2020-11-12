@@ -1,5 +1,5 @@
 import * as fetch from "node-fetch";
-import { room } from "./global";
+import { room } from "../global";
 
 //https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
 

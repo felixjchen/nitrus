@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import Page from "./lib/react-component-page";
+import Page from "./react-components/page";
 
 // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 const vh = window.innerHeight * 0.01;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Queue from "./react-component-queue";
+import Queue from "./queue";
 import SwipeableBottomSheet from "react-swipeable-bottom-sheet";
 
 const bottomSheetProps = {

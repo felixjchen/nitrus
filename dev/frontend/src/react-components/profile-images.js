@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./react-component-profile-images.css";
+import styles from "./profile-images.css";
 
 const ProfileImages = (props) => {
   const socket = props.socket;

@@ -2,15 +2,15 @@ import * as express from "express";
 import * as querystring from "querystring";
 import * as path from "path";
 
-import { getAccessAndRefresh } from "../lib/spotify-authorization";
-import { getProfile } from "../lib/spotify-helpers";
+import { getAccessAndRefresh } from "../spotify/authorization";
+import { getProfile } from "../spotify/helpers";
 import {
   client_id,
   redirect_uri,
   room,
   frontend_url,
   production,
-} from "../lib/global";
+} from "../global";
 
 const rootRouter = express.Router();
 

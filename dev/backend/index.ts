@@ -2,8 +2,8 @@ import * as express from "express";
 import * as path from "path";
 
 import { rootRouter } from "./routes/root";
-import { app, httpServer, port } from "./lib/global";
-import { createSocketIOEvents } from "./lib/socketio-events";
+import { app, httpServer, port } from "./global";
+import { createSocketIOEvents } from "./socketio/events";
 
 createSocketIOEvents();
 

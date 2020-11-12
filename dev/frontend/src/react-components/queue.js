@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./react-component-queue.css";
+import styles from "./queue.css";
 import {
   // ChevronSortDown32,
   ChevronSortUp32,

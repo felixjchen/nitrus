@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SearchPane from "./react-component-search";
-import ProfileImages from "./react-component-profile-images";
-import Debug from "./react-component-debug";
-import Queue from "./react-component-queue";
-import MobileQueue from "./react-component-mobile-queue";
+import SearchPane from "./search";
+import ProfileImages from "./profile-images";
+import Debug from "./debug";
+import Queue from "./queue";
+import MobileQueue from "./mobile-queue";
 import {
   Header,
   HeaderName,
@@ -16,7 +16,7 @@ import {
   Column,
 } from "carbon-components-react";
 import { Logout20 } from "@carbon/icons-react";
-import styles from "./react-component-page.css";
+import styles from "./page.css";
 import io from "socket.io-client";
 
 const urlSearchParams = new URLSearchParams(window.location.search);

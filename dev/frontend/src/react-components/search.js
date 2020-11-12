@@ -13,7 +13,7 @@ import {
   // OverflowMenuItem,
   Button,
 } from "carbon-components-react";
-import styles from "./react-component-search.css";
+import styles from "./search.css";
 import { Add16 } from "@carbon/icons-react";
 const searchResultProps = {
   useZebraStyles: true,

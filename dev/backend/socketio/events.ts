@@ -1,9 +1,5 @@
-import { room, io } from "./global";
-import {
-  getSimplifiedRoom,
-  refreshTimeout,
-  playTimeout,
-} from "./socketio-helpers";
+import { room, io } from "../global";
+import { getSimplifiedRoom, refreshTimeout, playTimeout } from "./helpers";
 
 const updateUsers = () => {
   let { users } = getSimplifiedRoom();
