@@ -4,7 +4,10 @@ import * as socketio from "socket.io";
 
 const app = express();
 const httpServer = http.createServer(app);
-const io = socketio(httpServer);
+const io = socketio(httpServer, {
+  pingInterval: 60 * 1000,
+  pingTimeout: 10000,
+});
 const port = 80;
 
 const production = process.env.production ? true : false;

@@ -1,12 +1,10 @@
-img,
-.emptyPhoto {
-  object-fit: cover;
-  width: 36px;
-  height: 36px;
-  margin: 6px;
-}
-
-.emptyPhoto {
-  text-align: center;
-  line-height: 35px;
+#ProfileImages .profilePhoto {
+  width: 32px;
+  height: 32px;
+  margin: 7px 0;
+  margin-right: 4px;
+  background-size: cover;
+  /* color: blue; */
+  /* text-align: center;
+  line-height: 35px; */
 }

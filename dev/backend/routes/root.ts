@@ -41,10 +41,9 @@ rootRouter.get("/login", async (req, res) => {
       profile.access_token = access_token;
       profile.refresh_token = refresh_token;
 
+      profile.profileImageURL = `https://picsum.photos/200/300?random=${profile.id}`;
       if (profile.images && profile.images.length > 0) {
         profile.profileImageURL = profile.images[0].url;
-      } else {
-        profile.profileImageURL = "";
       }
       room.users[profile.id] = profile;
       console.log(`User ${profile.display_name} has authenticated`);
