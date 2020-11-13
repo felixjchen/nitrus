@@ -9,7 +9,8 @@ import {
   setCurrentlyPlaying,
   setQueue,
 } from "./helpers";
-import { joinRoom, pausePlayer } from "../spotify/player";
+import { pausePlayer } from "../spotify/player";
+import { joinRoom } from "../spotify/helpers";
 
 const createSocketIOEvents = () => {
   io.on("connect", (socket) => {
@@ -33,7 +34,7 @@ const createSocketIOEvents = () => {
       setQueue(socket);
       setCurrentlyPlaying(socket);
 
-      joinRoom(spotifyID);
+      joinRoom(spotifyID, "room0");
     });
 
     socket.on("addTrackToQueue", ({ spotifyID, track }) => {

@@ -83,32 +83,4 @@ const pausePlayer = async (access_token) => {
   await fetch("https://api.spotify.com/v1/me/player/pause", requestOptions);
 };
 
-// for each user in room, play track with track_uri, finish at complete_at
-const startRoom = (roomName: string): void => {
-  let users = room.users;
-  let { currently_playing } = room;
-  for (let spotifyID in users) {
-    let { access_token } = room.users[spotifyID];
-    startPlayer(access_token, currently_playing.uri, 0);
-  }
-};
-
-// If there is a currentlyPlaying track and we're not actively listening to it... start it
-const joinRoom = async (spotifyID) => {
-  if (room.currently_playing !== null) {
-    let { currently_playing } = room;
-    let { access_token } = room.users[spotifyID];
-    let player = await getPlayer(access_token);
-
-    // If player not listening to anything or the right thing
-    if (
-      !player ||
-      !player.is_playing ||
-      !player.item ||
-      !(player.item.id === currently_playing.id)
-    ) {
-      startPlayer(access_token, currently_playing.uri, 0);
-    }
-  }
-};
-export { startPlayer, pausePlayer, startRoom, joinRoom };
+export { startPlayer, pausePlayer, getPlayer };

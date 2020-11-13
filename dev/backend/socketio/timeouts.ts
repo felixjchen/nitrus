@@ -1,8 +1,7 @@
 import * as socketio from "socket.io";
-import { createImportSpecifier } from "typescript";
 import { room } from "../global";
 import { getAccess } from "../spotify/authorization";
-import { startRoom } from "../spotify/player";
+import { startRoom } from "../spotify/helpers";
 import { broadcastCurrentlyPlaying, broadcastQueue } from "./helpers";
 
 const refreshTimeout = async (spotifyID: string, socket) => {
@@ -32,7 +31,7 @@ const playTimeout = async () => {
     let queueTrack = room.queue.shift().track;
     let { duration_ms, name } = queueTrack;
 
-    queueTrack.complete_at_ms = Date.now() + duration_ms;
+    queueTrack.complete_at = Date.now() + duration_ms;
 
     room.currently_playing = queueTrack;
 
