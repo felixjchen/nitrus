@@ -35,7 +35,7 @@ const ProfileImages = (props) => {
     profileImages.push(profilePhoto);
   }
 
-  return <div id="ProfileImages"> {profileImages} </div>;
+  return <> {profileImages}</>;
 };
 
 export default ProfileImages;

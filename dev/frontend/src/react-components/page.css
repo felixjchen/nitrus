@@ -36,8 +36,8 @@ img {
 
 #DesktopQueueWrapper,
 #MobileQueueWrapper {
-  height: calc(100vh - 48px);
-  height: calc(var(--vh, 1vh) * 100 - 48px);
+  min-height: calc(100vh - 48px);
+  min-height: calc(var(--vh, 1vh) * 100 - 48px);
   background-color: #262626;
   color: #f4f4f4;
 }
