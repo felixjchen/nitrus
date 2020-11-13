@@ -70,13 +70,13 @@ const Page = (props) => {
               </Row>
 
               {/* DEBUG */}
-              {/* <Row>
+              <Row>
                 <>
                   <Column>
                     <Debug socket={socket}></Debug>
                   </Column>
                 </>
-              </Row> */}
+              </Row>
             </Grid>
           </>
         )}

@@ -1,7 +1,5 @@
 import * as socketio from "socket.io";
-import { room } from "../global";
-import { getAccess } from "../spotify/authorization";
-import { roomStart } from "../spotify/player";
+import { room, io } from "../global";
 
 const simplifiedRoomKeys = [
   "display_name",
@@ -29,4 +27,37 @@ const getSimplifiedRoom = () => {
   return simpleRoom;
 };
 
-export { getSimplifiedRoom };
+const broadcastUsers = () => {
+  let { users } = getSimplifiedRoom();
+  io.to("room0").emit("setUsers", users);
+};
+const broadcastCurrentlyPlaying = () => {
+  let { currently_playing } = room;
+  io.to("room0").emit("setCurrentlyPlaying", currently_playing);
+};
+const broadcastQueue = () => {
+  let { queue } = room;
+  io.to("room0").emit("setQueue", queue);
+};
+
+const setUsers = (socket) => {
+  let { users } = getSimplifiedRoom();
+  socket.emit("setUsers", users);
+};
+const setCurrentlyPlaying = (socket) => {
+  let { currently_playing } = room;
+  socket.emit("setCurrentlyPlaying", currently_playing);
+};
+const setQueue = (socket) => {
+  let { queue } = room;
+  socket.emit("setQueue", queue);
+};
+export {
+  getSimplifiedRoom,
+  broadcastCurrentlyPlaying,
+  broadcastUsers,
+  broadcastQueue,
+  setUsers,
+  setCurrentlyPlaying,
+  setQueue,
+};

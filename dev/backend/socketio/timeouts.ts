@@ -1,19 +1,12 @@
 import * as socketio from "socket.io";
 import { room } from "../global";
 import { getAccess } from "../spotify/authorization";
-import { roomStart } from "../spotify/player";
-
-const simplifiedRoomKeys = [
-  "display_name",
-  "email",
-  "href",
-  "id",
-  "profileImageURL",
-];
+import { startRoom } from "../spotify/player";
+import { broadcastCurrentlyPlaying, broadcastQueue } from "./helpers";
 
 const refreshTimeout = async (spotifyID: string, socket) => {
   // Fetch from spotify API
-  let refresh_token = room.users[spotifyID].refresh_token;
+  let { refresh_token } = room.users[spotifyID];
   let { access_token, expires_in } = await getAccess(refresh_token);
 
   // Update Room
@@ -30,24 +23,21 @@ const refreshTimeout = async (spotifyID: string, socket) => {
 };
 
 // This function starts playing the highes prio track from the queue, it sets a timeout to itself after the track ends. If the queue empties, then sets currently_playing to null
-const playTimeout = async (
-  updateCurrentlyPlaying: () => void,
-  updateQueue: () => void
-) => {
+const playTimeout = async () => {
   if (room.queue.length == 0) {
     room.currently_playing = null;
   } else {
+    // Pop top prio
     let queueTrack = room.queue.shift().track;
     room.currently_playing = queueTrack;
 
-    roomStart(queueTrack.uri, 0);
+    console.log(`Room is now listening to ${queueTrack.name}`);
 
-    setTimeout(
-      () => playTimeout(updateCurrentlyPlaying, updateQueue),
-      queueTrack.duration_ms
-    );
+    startRoom(queueTrack.uri, 0);
+
+    setTimeout(() => playTimeout(), queueTrack.duration_ms);
   }
-  updateCurrentlyPlaying();
-  updateQueue();
+  broadcastCurrentlyPlaying();
+  broadcastQueue();
 };
 export { refreshTimeout, playTimeout };
