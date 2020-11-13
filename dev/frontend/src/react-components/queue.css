@@ -10,6 +10,7 @@
   margin-bottom: 0.6rem;
   height: 3rem;
   background-color: #0f62fe;
+  background: linear-gradient(90deg, #0043ce 20%, #0f62fe 20%);
 }
 
 #MobileQueueWrapper #Queue .currently-playing {

@@ -50,10 +50,27 @@ const Queue = (props) => {
 
 const CurrentlyPlayingTrack = (props) => {
   const { track } = props;
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(Date.now()), 100);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   if (track) {
+    let pos = track.duration_ms - track.complete_at + time;
+    let percent = (pos / track.duration_ms) * 100;
     return (
-      <div className="currently-playing">
+      <div
+        className="currently-playing"
+        style={{
+          background: `linear-gradient(90deg, #0043ce ${
+            percent - 1
+          }%, #0f62fe ${percent}%)`,
+        }}
+      >
         <div>
           <img src={`${track.albumImageURL}`}></img>
         </div>
