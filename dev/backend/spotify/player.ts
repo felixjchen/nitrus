@@ -83,13 +83,13 @@ const pausePlayer = async (access_token) => {
   await fetch("https://api.spotify.com/v1/me/player/pause", requestOptions);
 };
 
-// for each user in room, play track with track_uri, starting at position_ms
-const startRoom = (track_uri, position_ms) => {
-  //https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
+// for each user in room, play track with track_uri, finish at complete_at
+const startRoom = (roomName: string): void => {
   let users = room.users;
+  let { currently_playing } = room;
   for (let spotifyID in users) {
     let { access_token } = room.users[spotifyID];
-    startPlayer(access_token, track_uri, position_ms);
+    startPlayer(access_token, currently_playing.uri, 0);
   }
 };
 

@@ -39,6 +39,7 @@ const Queue = (props) => {
     <div id="Queue">
       {[
         <CurrentlyPlayingTrack
+          key={`currentlyPlaying`}
           track={currentlyPlaying}
         ></CurrentlyPlayingTrack>,
         ...QueueTracks,

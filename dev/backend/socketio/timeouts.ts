@@ -1,4 +1,5 @@
 import * as socketio from "socket.io";
+import { createImportSpecifier } from "typescript";
 import { room } from "../global";
 import { getAccess } from "../spotify/authorization";
 import { startRoom } from "../spotify/player";
@@ -29,15 +30,18 @@ const playTimeout = async () => {
   } else {
     // Pop top prio
     let queueTrack = room.queue.shift().track;
+    let { duration_ms, name } = queueTrack;
+
+    queueTrack.complete_at_ms = Date.now() + duration_ms;
+
     room.currently_playing = queueTrack;
 
-    console.log(`Room is now listening to ${queueTrack.name}`);
+    startRoom("room0");
+    console.log(`Room is now listening to ${name}`);
 
-    startRoom(queueTrack.uri, 0);
-
-    setTimeout(() => playTimeout(), queueTrack.duration_ms);
+    setTimeout(() => playTimeout(), duration_ms);
   }
-  broadcastCurrentlyPlaying();
-  broadcastQueue();
+  broadcastCurrentlyPlaying("room0");
+  broadcastQueue("room0");
 };
 export { refreshTimeout, playTimeout };

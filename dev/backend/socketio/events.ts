@@ -27,7 +27,7 @@ const createSocketIOEvents = () => {
       refreshTimeout(spotifyID, socket);
 
       // We update entire room about new user
-      broadcastUsers();
+      broadcastUsers("room0");
 
       // We update new user about the queue
       setQueue(socket);
@@ -55,7 +55,7 @@ const createSocketIOEvents = () => {
       }
 
       // Update all clients with current queue
-      broadcastQueue();
+      broadcastQueue("room0");
     });
 
     socket.on("voteTrack", ({ spotifyID, vote, trackID }) => {
@@ -79,27 +79,24 @@ const createSocketIOEvents = () => {
       // sort by highest prio first
       room.queue.sort((a, b) => b.priority - a.priority);
 
-      broadcastQueue();
+      broadcastQueue("room0");
     });
 
-    socket.on("disconnect", async () => {
+    socket.on("disconnect", async (reason) => {
       if (socket.id in socketMap) {
         //  MORE work here for queue... we need to remove votes
         let spotifyID = socketMap[socket.id];
         let user = room.users[spotifyID];
-        let { access_token, display_name, refreshTimeout } = user;
-        console.log(
-          display_name,
-          "has disconnected, with spotifyID",
-          spotifyID
-        );
+        let { access_token, refreshTimeout } = user;
+        console.log(`${spotifyID} - Disconnect, reason: ${reason}`);
 
         pausePlayer(access_token);
         clearTimeout(refreshTimeout);
 
         delete room.users[spotifyID];
+        delete socketMap[socket.id];
 
-        broadcastUsers();
+        broadcastUsers("room0");
       }
     });
   });

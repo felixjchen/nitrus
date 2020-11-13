@@ -27,17 +27,17 @@ const getSimplifiedRoom = () => {
   return simpleRoom;
 };
 
-const broadcastUsers = () => {
+const broadcastUsers = (roomName: string) => {
   let { users } = getSimplifiedRoom();
-  io.to("room0").emit("setUsers", users);
+  io.to(roomName).emit("setUsers", users);
 };
-const broadcastCurrentlyPlaying = () => {
+const broadcastCurrentlyPlaying = (roomName: string) => {
   let { currently_playing } = room;
-  io.to("room0").emit("setCurrentlyPlaying", currently_playing);
+  io.to(roomName).emit("setCurrentlyPlaying", currently_playing);
 };
-const broadcastQueue = () => {
+const broadcastQueue = (roomName: string) => {
   let { queue } = room;
-  io.to("room0").emit("setQueue", queue);
+  io.to(roomName).emit("setQueue", queue);
 };
 
 const setUsers = (socket) => {
