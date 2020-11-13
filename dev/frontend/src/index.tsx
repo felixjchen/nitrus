@@ -29,6 +29,6 @@ socket.on("redirectToLogin", () => {
 });
 
 render(
-  <Page spotifyID={spotifyID} socket={socket} />,
+  <Page spotifyID={spotifyID} socket={socket} production={production} />,
   document.getElementById("root")
 );

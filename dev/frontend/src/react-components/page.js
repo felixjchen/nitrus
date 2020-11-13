@@ -23,7 +23,19 @@ const spotifyLogoutHandler = () => {
 };
 
 const Page = (props) => {
-  let { socket, spotifyID } = props;
+  let { socket, spotifyID, production } = props;
+
+  const DEBUG = !production ? (
+    <Row>
+      <>
+        <Column>
+          <Debug socket={socket}></Debug>
+        </Column>
+      </>
+    </Row>
+  ) : (
+    <></>
+  );
 
   return (
     <div id="page">
@@ -69,14 +81,7 @@ const Page = (props) => {
                 </Column>
               </Row>
 
-              {/* DEBUG */}
-              <Row>
-                <>
-                  <Column>
-                    <Debug socket={socket}></Debug>
-                  </Column>
-                </>
-              </Row>
+              {DEBUG}
             </Grid>
           </>
         )}
