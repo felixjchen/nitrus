@@ -166,7 +166,6 @@ const SearchPane = (props) => {
 
   const addTrackToQueueHandler = (track) => {
     let { id, uri, name, duration_ms } = track;
-    console.log(track);
     let albumImageURL = track.album.images[0].url;
     let artistName = track.artists[0].name;
     track = { id, uri, name, albumImageURL, artistName, duration_ms };

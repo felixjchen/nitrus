@@ -20,7 +20,7 @@ if (production) {
 }
 
 let room = { queue: [], users: {}, currently_playing: null };
-
+let socketMap = {};
 console.log({
   production,
   client_id,
@@ -28,6 +28,7 @@ console.log({
   redirect_uri,
   frontend_url,
   room,
+  socketMap,
 });
 export {
   app,
@@ -40,4 +41,5 @@ export {
   redirect_uri,
   frontend_url,
   room,
+  socketMap,
 };

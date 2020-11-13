@@ -1,4 +1,4 @@
-import { room, io } from "../global";
+import { room, io, socketMap } from "../global";
 import { refreshTimeout, playTimeout } from "./timeouts";
 import {
   getSimplifiedRoom,
@@ -13,9 +13,7 @@ import { joinRoom, pausePlayer } from "../spotify/player";
 
 const createSocketIOEvents = () => {
   io.on("connect", (socket) => {
-    let socketID = socket.id;
-
-    socket.on("init", (spotifyID) => {
+    socket.on("init", async (spotifyID) => {
       // User not logged into backend..
       if (!room.users[spotifyID]) {
         socket.emit("redirectToLogin");
@@ -23,7 +21,10 @@ const createSocketIOEvents = () => {
       }
 
       socket.join("room0");
-      room.users[spotifyID].socketID = socketID;
+      socketMap[socket.id] = spotifyID;
+
+      // Send client their access token and start refresh token timeout
+      refreshTimeout(spotifyID, socket);
 
       // We update entire room about new user
       broadcastUsers();
@@ -31,10 +32,8 @@ const createSocketIOEvents = () => {
       // We update new user about the queue
       setQueue(socket);
       setCurrentlyPlaying(socket);
-      joinRoom(spotifyID);
 
-      // Send client their access token and start refresh token timeout
-      refreshTimeout(spotifyID, socket);
+      joinRoom(spotifyID);
     });
 
     socket.on("addTrackToQueue", ({ spotifyID, track }) => {
@@ -84,29 +83,23 @@ const createSocketIOEvents = () => {
     });
 
     socket.on("disconnect", async () => {
-      //  MORE work here for queue... we need to remove votes
-      let spotifyID = "";
-      for (let userID in room.users) {
-        let user = room.users[userID];
-        if (user.socketID == socketID) {
-          spotifyID = userID;
-          break;
-        }
-      }
-
-      // We update entire room about disconnect user
-      if (spotifyID !== "") {
-        broadcastUsers();
-        await pausePlayer(spotifyID);
-
+      if (socket.id in socketMap) {
+        //  MORE work here for queue... we need to remove votes
+        let spotifyID = socketMap[socket.id];
         let user = room.users[spotifyID];
-        clearTimeout(user.refreshTimeout);
+        let { access_token, display_name, refreshTimeout } = user;
         console.log(
-          user.display_name,
+          display_name,
           "has disconnected, with spotifyID",
           spotifyID
         );
+
+        pausePlayer(access_token);
+        clearTimeout(refreshTimeout);
+
         delete room.users[spotifyID];
+
+        broadcastUsers();
       }
     });
   });

@@ -14,10 +14,10 @@ window.addEventListener("resize", () => {
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const spotifyID = urlSearchParams.get("spotifyID");
-const backendURL =
-  process.env.NODE_ENV === "production"
-    ? "https://nitrus.azurewebsites.net"
-    : "http://0.0.0.0";
+const production = process.env.NODE_ENV === "production";
+const backendURL = production
+  ? "https://nitrus.azurewebsites.net"
+  : "http://0.0.0.0";
 
 const socket = io(backendURL);
 

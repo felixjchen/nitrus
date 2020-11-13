@@ -38,8 +38,7 @@ const getPlayer = async (access_token) => {
 };
 
 // for user with spotifyID, play track with track_uri, starting at position_ms
-const startPlayer = async (spotifyID, track_uri, position_ms) => {
-  let { access_token } = room.users[spotifyID];
+const startPlayer = async (access_token, track_uri, position_ms) => {
   let myHeaders = {
     Authorization: "Bearer " + access_token,
     "Content-Type": "application/json",
@@ -59,7 +58,7 @@ const startPlayer = async (spotifyID, track_uri, position_ms) => {
   };
 
   let devices = await getDevices(access_token);
-  if (devices.length > 0) {
+  if (devices && devices.length > 0) {
     let device_id = devices[0].id;
 
     // Queue on first device
@@ -71,9 +70,8 @@ const startPlayer = async (spotifyID, track_uri, position_ms) => {
 };
 
 // for user with spotifyID, pause player
-const pausePlayer = async (spotifyID) => {
+const pausePlayer = async (access_token) => {
   // https://developer.spotify.com/documentation/web-api/reference/player/pause-a-users-playback/
-  let { access_token } = room.users[spotifyID];
   let myHeaders = { Authorization: "Bearer " + access_token };
 
   let requestOptions = {
@@ -90,7 +88,8 @@ const startRoom = (track_uri, position_ms) => {
   //https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/
   let users = room.users;
   for (let spotifyID in users) {
-    startPlayer(spotifyID, track_uri, position_ms);
+    let { access_token } = room.users[spotifyID];
+    startPlayer(access_token, track_uri, position_ms);
   }
 };
 
@@ -101,14 +100,14 @@ const joinRoom = async (spotifyID) => {
     let { access_token } = room.users[spotifyID];
     let player = await getPlayer(access_token);
 
-    // If im not listening to anything
+    // If player not listening to anything or the right thing
     if (
       !player ||
+      !player.is_playing ||
       !player.item ||
-      !player.item.is_playing ||
       !(player.item.id === currently_playing.id)
     ) {
-      startPlayer(spotifyID, currently_playing.uri, 0);
+      startPlayer(access_token, currently_playing.uri, 0);
     }
   }
 };
