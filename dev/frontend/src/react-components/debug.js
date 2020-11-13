@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./debug.css";
 
 const Debug = (props) => {
-  const socket = props.socket;
+  const { socket } = props;
   const [users, setUsers] = useState([]);
   const [queue, setQueue] = useState([]);
   const [accessToken, setAccessToken] = useState("");
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState({});
 
   useEffect(() => {
     socket.on("setUsers", (users) => {

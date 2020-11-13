@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SearchPane from "./search";
 import ProfileImages from "./profile-images";
 import Debug from "./debug";
@@ -17,26 +17,14 @@ import {
 } from "carbon-components-react";
 import { Logout20 } from "@carbon/icons-react";
 import styles from "./page.css";
-import io from "socket.io-client";
-
-const urlSearchParams = new URLSearchParams(window.location.search);
-const spotifyID = urlSearchParams.get("spotifyID");
-const backendURL = "http://0.0.0.0";
-// const backendURL = "https://nitrus.azurewebsites.net";
-
-const socket = io(backendURL);
-socket.on("connect", () => {
-  socket.emit("init", spotifyID);
-});
-socket.on("redirectToLogin", () => {
-  window.location.replace(`${backendURL}/login`);
-});
 
 const spotifyLogoutHandler = () => {
   window.location.replace("https://www.spotify.com/logout/");
 };
 
-const Page = () => {
+const Page = (props) => {
+  let { socket, spotifyID } = props;
+
   return (
     <div id="page">
       <HeaderContainer

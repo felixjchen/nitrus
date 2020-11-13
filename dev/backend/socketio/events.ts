@@ -1,5 +1,6 @@
 import { room, io } from "../global";
-import { getSimplifiedRoom, refreshTimeout, playTimeout } from "./helpers";
+import { refreshTimeout, playTimeout } from "./timeouts";
+import { getSimplifiedRoom } from "./helpers";
 
 const updateUsers = () => {
   let { users } = getSimplifiedRoom();

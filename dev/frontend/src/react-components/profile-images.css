@@ -1,6 +1,12 @@
-img {
+img,
+.emptyPhoto {
   object-fit: cover;
-  max-width: 36px;
-  max-height: 36px;
+  width: 36px;
+  height: 36px;
   margin: 6px;
+}
+
+.emptyPhoto {
+  text-align: center;
+  line-height: 35px;
 }
