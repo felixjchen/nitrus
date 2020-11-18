@@ -25,5 +25,9 @@
 
 ### TODO
 
-- sortable table
+- Device selection
+- Join/leave parties
+- Deafen
+- Desktop queue
+- socket timeout
 - queue sends user's ties to the top
