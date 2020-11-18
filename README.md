@@ -1,7 +1,8 @@
 # spotify vote
 
+- Realtime application for users to vote and listen to a shared Spotify queue
+- Use Spotify API to search for songs, get profiles, start and stop playback 
 - https://nitrus.azurewebsites.net/login
-- Realtime application for users to vote on a Spotify music queue
 
 ## resources
 
