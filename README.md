@@ -4,7 +4,10 @@
 - Use Spotify API to search for songs, get profiles, start and stop playback 
 - https://nitrus.azurewebsites.net
 
-## TODO
+## Motivation
+- friends can't agree on what to listen too, one sole person controls the speaker
+
+## Todo
 
 - socket timeout
 - Device selection
