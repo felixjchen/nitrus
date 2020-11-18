@@ -6,11 +6,11 @@
 
 ## TODO
 
+- socket timeout
 - Device selection
 - Join/leave parties
 - Deafen
-- Desktop queue
-- socket timeout
+- Desktop Search
 - queue sends user's ties to the top
 
 
