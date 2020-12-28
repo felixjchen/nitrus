@@ -7,7 +7,7 @@
 - friends can't agree on what to listen too, one sole person controls the speaker
 
 ## Todo
-
+- Skip song 
 - socket timeout
 - Device selection
 - Join/leave parties
