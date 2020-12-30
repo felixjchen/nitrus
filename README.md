@@ -7,14 +7,15 @@
 - friends can't agree on what to listen too, one sole person controls the speaker
 
 ## Todo
+- More search results / better search
+- Recommendations
+- Mobile pauses?
 - Skip song 
 - socket timeout
 - Device selection
 - Join/leave parties
 - Deafen
 - Desktop Search
-- queue sends user's ties to the top
-
 
 
 ## Sources
