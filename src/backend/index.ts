@@ -8,6 +8,7 @@ import { createSocketIOEvents } from "./socketio/events";
 createSocketIOEvents();
 
 app.use("/static", express.static(path.resolve(`${__dirname}/build/static/`)));
+app.use("/", express.static(path.resolve(`${__dirname}/build/`)));
 app.use("/", rootRouter);
 
 httpServer.listen(port, () => {
