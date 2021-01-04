@@ -1,23 +1,24 @@
 # Nitrus
+
 - Realtime application for users to vote and listen to a shared Spotify queue
-- Use Spotify API to search for songs, get profiles, start and stop playback 
+- Use Spotify API to search for songs, get profiles, start and stop playback
 - https://nitrus.azurewebsites.net
 
 ## Motivation
+
 - friends can't agree on what to listen too, one sole person controls the speaker
 
 ## Todo
-- Wheres my alien
-- More search results / better search
+
+- better search
 - Recommendations
 - Mobile pauses?
-- Skip song 
+- Skip song
 - socket timeout
 - Device selection
 - Join/leave parties
 - Deafen
 - Desktop Search
-
 
 ## Sources
 
