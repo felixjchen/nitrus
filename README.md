@@ -6,7 +6,8 @@
 
 ## Motivation
 
-- friends can't agree on what to listen too, one sole person controls the speaker
+- can't agree on what to listen too, voting may be ideal
+- shared Spotify queue
 
 ## Todo
 
