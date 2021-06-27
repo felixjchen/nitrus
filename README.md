@@ -1,7 +1,7 @@
 # Nitrus
 
-A realtime application for users to vote on a shared Spotify queue while synchronizing playback of the top track.
-
+<!-- A realtime application for users to vote on a shared Spotify queue while synchronizing playback of the top track.
+ -->
 https://nitrus.azurewebsites.net
 
 - users vote and listen to a shared Spotify queue in realtime
