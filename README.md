@@ -3,7 +3,10 @@ Vote on a Spotify priority queue and listen to the highest priority track
 
  🌐 [Application](https://nitrus.azurewebsites.net)
 
-
+## Implementation
+- React 
+- Azure 
+- Socket.IO + Spotify API 
 
 ## Todo
 
