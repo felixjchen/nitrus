@@ -1,7 +1,8 @@
 
+Vote on a Spotify priority queue and listen to the highest priority track
+
  🌐 [Application](https://nitrus.azurewebsites.net)
 
-Vote on a Spotify priority queue and listen to the highest priority track
 
 
 ## Todo
