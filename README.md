@@ -1,4 +1,4 @@
-# Nitrus
+
 
 <!-- A realtime application for users to vote on a shared Spotify queue while synchronizing playback of the top track.
  -->
