@@ -1,7 +1,7 @@
 
 Vote on a Spotify priority queue and listen to the highest priority track
 
- 🌐 [Application](https://nitrus.azurewebsites.net)
+This project is offline
 
 ## Implementation
 - React 
